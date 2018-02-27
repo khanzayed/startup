@@ -137,11 +137,19 @@ class SearchTableViewCell: UITableViewCell {
             followBtn.isEnabled = true
             followLbl.text = RelationTypes.kUnblock.rawValue
         } else if info.isRequestReceived == true {
-            trendingImageView.isHidden = true
-            followingView.isHidden = true
-            followView.isHidden = false
-            followBtn.isEnabled = true
-            followLbl.text = RelationTypes.kAccept.rawValue
+            if info.isFollower == true { 
+                trendingImageView.isHidden = true
+                followingView.isHidden = true
+                followView.isHidden = false
+                followBtn.isEnabled = true
+                followLbl.text = RelationTypes.kFollow.rawValue
+            } else {
+                trendingImageView.isHidden = true
+                followingView.isHidden = true
+                followView.isHidden = false
+                followBtn.isEnabled = true
+                followLbl.text = RelationTypes.kAccept.rawValue
+            }
         } else if info.isRequestSent == true {
             trendingImageView.isHidden = true
             followingView.isHidden = true

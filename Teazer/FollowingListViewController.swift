@@ -346,7 +346,6 @@ extension FollowingListViewController {
 extension FollowingListViewController {
     
     //MARK: fetch followings for user API
-    
     func unblockFriend(friendId:Int, followInfo:FollowInfo, indexPath:IndexPath) {
         guard let friendId = friendUserId, Connectivity.isConnectedToInternet() else {
             return

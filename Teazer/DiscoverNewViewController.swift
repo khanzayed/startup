@@ -378,10 +378,9 @@ extension DiscoverNewViewController {
             searchCell.followLbl.text = RelationTypes.kRequested.rawValue
         } else {
             searchCell.trendingImageView.isHidden = true
-            searchCell.followingView.isHidden = true
-            searchCell.followView.isHidden = false
-            searchCell.followBtn.isEnabled = true
-            searchCell.followLbl.text = RelationTypes.kFollow.rawValue
+            searchCell.followingView.isHidden = false
+            searchCell.followView.isHidden = true
+            searchCell.followingBtn.isEnabled = true
         }
         searchCell.followBtn.isEnabled = false
         searchCell.followingBtn.isEnabled = false
