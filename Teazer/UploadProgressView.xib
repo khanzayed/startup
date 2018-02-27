@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ProximaNova-Semibold.ttf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UploadProgressView" customModule="Teazer" customModuleProvider="target">
+            <connections>
+                <outlet property="btnCancel" destination="eiR-6r-EB4" id="dMr-V9-bPx"/>
+                <outlet property="contentView" destination="XaR-n2-WrK" id="dEc-e6-zIO"/>
+                <outlet property="imageViewProfile" destination="LGt-W0-L6n" id="I27-lK-Rtj"/>
+                <outlet property="lblUploading" destination="9gN-oX-JJ4" id="AZQ-xa-4Uw"/>
+                <outlet property="progressViewUpload" destination="oJy-8w-a2U" id="oV5-6O-CXn"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="XaR-n2-WrK">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhc-rn-WsX">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploading your Video" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gN-oX-JJ4">
+                            <rect key="frame" x="55" y="11" width="142" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="d1r-QU-Rv4"/>
+                                <constraint firstAttribute="width" constant="142" id="hO4-3Q-b6R"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="13"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oJy-8w-a2U">
+                            <rect key="frame" x="55" y="41" width="270" height="2"/>
+                            <color key="progressTintColor" red="0.92941176469999998" green="0.24313725489999999" blue="0.31764705879999999" alpha="1" colorSpace="deviceRGB"/>
+                        </progressView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiR-6r-EB4">
+                            <rect key="frame" x="328" y="0.0" width="47" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="33u-wg-QAY"/>
+                                <constraint firstAttribute="width" constant="47" id="sbD-dP-eNG"/>
+                            </constraints>
+                            <state key="normal" image="ic_close_icon"/>
+                            <connections>
+                                <action selector="stopUploadingButtonTapped:" destination="-1" eventType="touchUpInside" id="2rL-CN-CfA"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LGt-W0-L6n">
+                            <rect key="frame" x="6" y="6" width="39" height="39"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="39" id="Q0a-tv-CAc"/>
+                                <constraint firstAttribute="height" constant="39" id="ilF-gg-R5N"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="oJy-8w-a2U" firstAttribute="top" secondItem="9gN-oX-JJ4" secondAttribute="bottom" constant="14" id="4kY-Iu-MZa"/>
+                        <constraint firstAttribute="trailing" secondItem="oJy-8w-a2U" secondAttribute="trailing" constant="50" id="6Jk-E2-Gsn"/>
+                        <constraint firstItem="LGt-W0-L6n" firstAttribute="leading" secondItem="hhc-rn-WsX" secondAttribute="leading" constant="6" id="Blp-DE-x5G"/>
+                        <constraint firstItem="9gN-oX-JJ4" firstAttribute="top" secondItem="hhc-rn-WsX" secondAttribute="top" constant="11" id="Dta-FQ-4sl"/>
+                        <constraint firstItem="oJy-8w-a2U" firstAttribute="leading" secondItem="hhc-rn-WsX" secondAttribute="leading" constant="55" id="Viv-9l-lWw"/>
+                        <constraint firstItem="LGt-W0-L6n" firstAttribute="top" secondItem="hhc-rn-WsX" secondAttribute="top" constant="6" id="YRn-mJ-BGf"/>
+                        <constraint firstAttribute="trailing" secondItem="eiR-6r-EB4" secondAttribute="trailing" id="ja7-ke-PJD"/>
+                        <constraint firstItem="9gN-oX-JJ4" firstAttribute="leading" secondItem="LGt-W0-L6n" secondAttribute="trailing" constant="10" id="rp2-rE-8va"/>
+                        <constraint firstItem="eiR-6r-EB4" firstAttribute="top" secondItem="hhc-rn-WsX" secondAttribute="top" id="tIg-GT-E61"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="hhc-rn-WsX" firstAttribute="top" secondItem="gSz-OS-afS" secondAttribute="top" id="6IK-kr-89a"/>
+                <constraint firstItem="hhc-rn-WsX" firstAttribute="leading" secondItem="gSz-OS-afS" secondAttribute="leading" id="O8b-KJ-okJ"/>
+                <constraint firstItem="hhc-rn-WsX" firstAttribute="bottom" secondItem="gSz-OS-afS" secondAttribute="bottom" id="OBX-1U-oza"/>
+                <constraint firstItem="hhc-rn-WsX" firstAttribute="trailing" secondItem="gSz-OS-afS" secondAttribute="trailing" id="dxi-9K-gMh"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="gSz-OS-afS"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_close_icon" width="24" height="24"/>
+    </resources>
+</document>

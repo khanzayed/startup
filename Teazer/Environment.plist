@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Teazer</key>
+	<dict>
+		<key>myAPIURL</key>
+		<string>https://api.teazer.online/api</string>
+	</dict>
+	<key>Teazer-Dev</key>
+	<dict>
+		<key>myAPIURL</key>
+		<string>http://dev-api.teazer.online/api</string>
+	</dict>
+</dict>
+</plist>
