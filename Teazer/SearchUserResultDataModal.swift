@@ -24,8 +24,10 @@ class SearchUserResultDataModal: AppDataModal {
                 users = [Friend]()
                 for user in list {
                     let friend = Friend(params: user)
-                    friend.followInfo = FollowInfo(params: user)
-                    UserProfileCache.shared.saveFriendRelation(friend: friend)
+                    if let info = user["follow_info"] as? [String:Any] {
+                        friend.followInfo = FollowInfo(params: info)
+                        UserProfileCache.shared.saveFriendRelation(friend: friend)
+                    }
                     users?.append(friend)
                 }
             }

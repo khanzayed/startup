@@ -504,7 +504,7 @@ extension NewProfileViewController {
         if info.blocked == true {
             lblFollow.text = RelationTypes.kUnblock.rawValue
         } else if info.isRequestReceived == true {
-            lblFollow.text = RelationTypes.kAccept.rawValue
+            lblFollow.text = (info.isFollower == true) ? RelationTypes.kFollow.rawValue : RelationTypes.kAccept.rawValue
         } else if info.isRequestSent == true {
             lblFollow.text = RelationTypes.kRequested.rawValue
         } else if info.isFollowing == true {

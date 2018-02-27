@@ -65,11 +65,19 @@ class UserProfileFriendsListTableViewCell: UITableViewCell {
             requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
         } else if info.isRequestReceived == true {
-            requestBtn.setTitle(RelationTypes.kAccept.rawValue, for: .normal)
-            requestBtn.setImage(nil, for: .normal)
-            requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
-            requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
-            requestBtn.contentEdgeInsets.left = 0
+            if info.isFollower == true {
+                requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
+                requestBtn.setImage(nil, for: .normal)
+                requestBtn.contentEdgeInsets.left = 0
+                requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
+                requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
+            } else {
+                requestBtn.setTitle(RelationTypes.kAccept.rawValue, for: .normal)
+                requestBtn.setImage(nil, for: .normal)
+                requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
+                requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
+                requestBtn.contentEdgeInsets.left = 0
+            }
         } else if info.isRequestSent == true {
             requestBtn.setTitle(RelationTypes.kRequested.rawValue, for: .normal)
             requestBtn.setImage(nil, for: .normal)
