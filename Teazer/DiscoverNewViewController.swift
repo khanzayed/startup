@@ -809,8 +809,8 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                                     cell.hideVides(value: false)
                                     cell.videoImageView.image = image
                                 }
-                                AppImageCache.savePostImage(image: image, postId: key)
                             }
+                            AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
                 }

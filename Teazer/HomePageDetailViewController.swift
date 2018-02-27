@@ -20,6 +20,8 @@ class HomePageDetailViewController: UIViewController {
     typealias ReactionRecordedBlock = () -> Void
     var reactionRecordedBlock: ReactionRecordedBlock?
     
+    
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -98,6 +100,13 @@ class HomePageDetailViewController: UIViewController {
     var openReaction = false
     var reactionId = -1
     let coachMarksController = CoachMarksController()
+    var tagsCount:Int? {
+        didSet {
+            if let count = tagsCount {
+                noOfTagsLbl.text = "\(count)"
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +148,10 @@ class HomePageDetailViewController: UIViewController {
             disableReactButton()
             fetchReactions()
             reactionRecordedBlock?()
+        }
+        
+        if postDetails != nil {
+            tagsCount = postDetails.totalTag
         }
     }
     
@@ -347,7 +360,7 @@ class HomePageDetailViewController: UIViewController {
         
         likesLbl.text = "\(postDetails.likes!)"
         if let totalTags = postDetails.totalTag {
-            noOfTagsLbl.text = "\(totalTags)"
+            tagsCount = totalTags
         }
       
         if postDetails.totalReactions == 0 && postDetails.canDelete == true {
@@ -1309,9 +1322,7 @@ extension HomePageDetailViewController {
             DispatchQueue.main.async {
                 if let list = responseData.friendsList {
                     strongSelf.taggedFriends = Array(list)
-                    if strongSelf.noOfTagsLbl.text == "0" {
-                        strongSelf.noOfTagsLbl.text = "\(list.count)"
-                    }
+                    strongSelf.tagsCount = list.count
                     strongSelf.setupTaggedFriendsProfileImages()
                 }
             }

@@ -100,7 +100,6 @@ class MostPopularPostCollectionViewCell: UICollectionViewCell {
         }
         profileTappedBlock?(userId, isMyself)
     }
-    
 }
     
 extension MostPopularPostCollectionViewCell {
@@ -132,5 +131,4 @@ extension MostPopularPostCollectionViewCell {
             reactionsLbl.text = ""
         }
     }
-    
 }

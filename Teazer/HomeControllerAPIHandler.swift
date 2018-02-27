@@ -168,4 +168,14 @@ class HomeControllerAPIHandler: AppAPIHandler {
             completionBlock(dataModal)
         }
     }
+    
+    func untagMyself(_ postId: Int, completionBlock:@escaping (AppDataModal) -> Void) {
+        let url = baseURL + "/v1/post/untag/me/\(postId)"
+        
+        getCURLRequest(url: url, params: nil, method: .delete)
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            let dataModal = AppDataModal(jsonResponse: response)
+            completionBlock(dataModal)
+        }
+    }
 }

@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 class TaggedFriendsViewController: UIViewController {
-
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var closeBtn: UIButton!
@@ -21,6 +21,7 @@ class TaggedFriendsViewController: UIViewController {
     var loaderView:LoaderView?
     var taggedFriends = [Friend]()
     let imageCache = AutoPurgingImageCache()
+    let homeDetailVC = HomePageDetailViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,35 @@ extension TaggedFriendsViewController {
         }
     }
     
+    func untagMyself(postId:Int , indexPath:IndexPath) {
+        
+        if !Connectivity.isConnectedToInternet() {
+            return
+        }
+        HomeControllerAPIHandler().untagMyself(postId){ [weak self] (responseData) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            if let error = responseData.errorObject {
+                self?.view.makeToast(error.message)
+                return
+            }
+            
+            if let message = responseData.message {
+                self?.view.makeToast("\(message)")
+            }
+            
+            if responseData.status == true {
+                DispatchQueue.main.async {
+                    strongSelf.taggedFriends.remove(at: indexPath.row)
+                    strongSelf.tableView.deleteRows(at: [indexPath], with: .right)
+                    
+                }
+            }
+        }
+    }
+    
 }
 
 extension TaggedFriendsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -102,6 +132,9 @@ extension TaggedFriendsViewController: UITableViewDataSource, UITableViewDelegat
                 DispatchQueue.main.async {
                     cell.profileImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
+            }
+            cell.blockUntagMyself = { [weak self] in
+                self?.untagMyself(postId: (self?.postId)!, indexPath: indexPath)
             }
             
             if let urlStr = friend.profileMedia?.thumbUrl {

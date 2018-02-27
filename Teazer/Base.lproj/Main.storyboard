@@ -4388,12 +4388,12 @@ Delhi fort</string>
                                                         <constraint firstAttribute="height" constant="0.5" id="gKh-cb-zfj"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQD-V0-yh0">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQD-V0-yh0">
                                                     <rect key="frame" x="293" y="21" width="67" height="23"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Untag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fp-op-umF">
                                                             <rect key="frame" x="4" y="1" width="59" height="21"/>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -4436,10 +4436,10 @@ Delhi fort</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="ViewUntag" destination="IQD-V0-yh0" id="yL3-tH-cpF"/>
                                             <outlet property="fullNameLbl" destination="x3y-E2-6Hx" id="88K-xm-Jgl"/>
                                             <outlet property="profileImageView" destination="jNz-r9-aUE" id="eoc-s8-ZPq"/>
                                             <outlet property="userNameLbl" destination="cnd-Sf-keT" id="aBV-Qe-zwe"/>
+                                            <outlet property="viewUntag" destination="IQD-V0-yh0" id="fXS-jE-K9W"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
