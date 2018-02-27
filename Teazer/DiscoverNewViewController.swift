@@ -857,12 +857,10 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                     if let urlStr = list[0].thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
-                                    cell.hideVides(value: false)
-                                    cell.videoImageView.image = image
-                                }
-                                AppImageCache.savePostImage(image: image, postId: key)
+                                cell.hideVides(value: false)
+                                cell.videoImageView.image = image
                             }
+                            AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
                 }
@@ -877,9 +875,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
-                                    cell.profileImageView.image = resizedImage
-                                }
+                                cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
                         })
@@ -908,10 +904,8 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                     if let urlStr = list[0].thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
-                                    cell.hideVides(value: false)
-                                    cell.videoImageView.image = image
-                                }
+                                cell.hideVides(value: false)
+                                cell.videoImageView.image = image
                                 AppImageCache.savePostImage(image: image, postId: key)
                             }
                         })
@@ -928,9 +922,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
-                                    cell.profileImageView.image = resizedImage
-                                }
+                                cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
                         })
@@ -959,12 +951,10 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                     if let urlStr = list[0].thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
                                     cell.hideVides(value: false)
                                     cell.videoImageView.image = image
-                                }
-                                AppImageCache.savePostImage(image: image, postId: key)
                             }
+                            AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
                 }
@@ -979,9 +969,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.firstInterestCollectionView.cellForItem(at: indexPath) as? InterestsCollectionViewCell {
-                                    cell.profileImageView.image = resizedImage
-                                }
+                                cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
                         })
