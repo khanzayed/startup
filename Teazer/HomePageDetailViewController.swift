@@ -1343,7 +1343,6 @@ extension HomePageDetailViewController {
                     strongSelf.setupTaggedFriendsProfileImages()
                 }
             }
-            
         }
     }
     
@@ -1466,6 +1465,5 @@ extension HomePageDetailViewController {
         }
         return nil
     }
-    
 }
 
