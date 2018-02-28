@@ -318,7 +318,7 @@ Delhi fort</string>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-3Z-45c">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photographer. Traveller. Dreamer. Explorer.   Follow me to see my travel videos." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bti-2r-7pb">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIO" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bti-2r-7pb">
                                                                 <rect key="frame" x="20" y="69" width="242" height="41"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="41" id="Csx-pa-aGB"/>
@@ -327,8 +327,8 @@ Delhi fort</string>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Faraz Habib" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KeL-0L-YN6">
-                                                                <rect key="frame" x="104" y="11" width="109.33333333333331" height="24"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KeL-0L-YN6">
+                                                                <rect key="frame" x="104" y="11" width="200" height="24"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="24" id="YI9-bk-Vf2"/>
                                                                 </constraints>
@@ -336,8 +336,8 @@ Delhi fort</string>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@farazhabib" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeR-tX-w8k">
-                                                                <rect key="frame" x="104" y="35" width="70" height="16"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeR-tX-w8k">
+                                                                <rect key="frame" x="104" y="35" width="0.0" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="9wI-fF-B0j"/>
                                                                 </constraints>
@@ -345,8 +345,8 @@ Delhi fort</string>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="823 Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP4-1w-jH6">
-                                                                <rect key="frame" x="315.33333333333331" y="16" width="42.666666666666686" height="12"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP4-1w-jH6">
+                                                                <rect key="frame" x="326.66666666666669" y="16" width="31.333333333333314" height="12"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="12" id="H5D-RP-V2I"/>
                                                                 </constraints>
@@ -355,7 +355,7 @@ Delhi fort</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_likes" translatesAutoresizingMaskIntoConstraints="NO" id="zmD-8r-txY">
-                                                                <rect key="frame" x="298" y="14" width="14" height="14"/>
+                                                                <rect key="frame" x="309.33333333333331" y="14" width="14" height="14"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="14" id="Ozc-pw-HuX"/>
                                                                     <constraint firstAttribute="width" constant="14" id="VyF-iI-UQa"/>
@@ -404,6 +404,7 @@ Delhi fort</string>
                                                             <constraint firstItem="NP4-1w-jH6" firstAttribute="top" secondItem="wzN-3Z-45c" secondAttribute="top" constant="16" id="g5q-dd-RdD"/>
                                                             <constraint firstItem="aeR-tX-w8k" firstAttribute="top" secondItem="KeL-0L-YN6" secondAttribute="bottom" id="ox6-il-f8G"/>
                                                             <constraint firstAttribute="trailing" secondItem="bti-2r-7pb" secondAttribute="trailing" constant="113" id="pBA-fL-X77"/>
+                                                            <constraint firstItem="zmD-8r-txY" firstAttribute="leading" secondItem="KeL-0L-YN6" secondAttribute="trailing" constant="5.3300000000000001" id="paJ-zk-ixn"/>
                                                             <constraint firstItem="NP4-1w-jH6" firstAttribute="leading" secondItem="zmD-8r-txY" secondAttribute="trailing" constant="3.3333333333333144" id="qZT-f0-Ogw"/>
                                                             <constraint firstItem="aeR-tX-w8k" firstAttribute="leading" secondItem="wzN-3Z-45c" secondAttribute="leading" constant="104" id="sST-xx-vlG"/>
                                                             <constraint firstAttribute="height" constant="110" id="sls-qT-hiY"/>
@@ -416,7 +417,7 @@ Delhi fort</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gc5-5S-aQM">
                                                                 <rect key="frame" x="20" y="0.0" width="83" height="50"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ8-NQ-f6K">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ8-NQ-f6K">
                                                                         <rect key="frame" x="0.0" y="15" width="83" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="a3o-M0-NYE"/>
@@ -455,7 +456,7 @@ Delhi fort</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ZO-yi-KvN">
                                                                 <rect key="frame" x="104" y="0.0" width="83" height="50"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="52" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxa-9p-iUS">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxa-9p-iUS">
                                                                         <rect key="frame" x="0.0" y="15" width="83" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="vJH-8T-GvE"/>
@@ -495,7 +496,7 @@ Delhi fort</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gy-HQ-NfR">
                                                                 <rect key="frame" x="188" y="0.0" width="83" height="50"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="192" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="483-rJ-dZZ">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="483-rJ-dZZ">
                                                                         <rect key="frame" x="0.0" y="15" width="83" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="cjt-T4-D2l"/>
@@ -538,7 +539,7 @@ Delhi fort</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6e-wx-jlv">
                                                                 <rect key="frame" x="272" y="0.0" width="83" height="50"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="211" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-1s-P5Y">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-1s-P5Y">
                                                                         <rect key="frame" x="0.0" y="15" width="83" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="8HC-20-tyi"/>

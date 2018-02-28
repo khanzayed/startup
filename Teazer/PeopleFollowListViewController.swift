@@ -85,10 +85,10 @@ extension PeopleFollowListViewController: UITableViewDelegate, UITableViewDataSo
                 }
             }
             if let urlStr = follower.profileMedia?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell {
+                        if let cell = self?.tableView.cellForRow(at: lastIndexPath) as? UserProfileFriendsListTableViewCell {
                             cell.profileImageView.image = resizedImage
                         }
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -172,8 +172,19 @@ extension PeopleFollowListViewController {
             return
         }
         
-        let buttonTitle = (isAccountPrivate) ? RelationTypes.kRequested.rawValue : RelationTypes.kFollowing.rawValue
-        followCell.requestBtn.setTitle(buttonTitle, for: .normal)
+        if isAccountPrivate {
+            followCell.requestBtn.setTitle(RelationTypes.kRequested.rawValue, for: .normal)
+            followCell.requestBtn.setImage(nil, for: .normal)
+            followCell.requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = 0
+        } else {
+            followCell.requestBtn.setTitle(RelationTypes.kFollowing.rawValue, for: .normal)
+            followCell.requestBtn.setImage(UIImage(named: "ic_select_tick_icon"), for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = -11
+            followCell.requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
+        }
         followCell.requestBtn.isEnabled = false
     }
     
@@ -208,8 +219,19 @@ extension PeopleFollowListViewController {
             return
         }
         
-        let buttonTitle = (newFollowInfo.isFollowing == true) ? RelationTypes.kFollowing.rawValue : RelationTypes.kFollow.rawValue
-        followCell.requestBtn.setTitle(buttonTitle, for: .normal)
+        if newFollowInfo.isFollowing == true {
+            followCell.requestBtn.setTitle(RelationTypes.kFollowing.rawValue, for: .normal)
+            followCell.requestBtn.setImage(UIImage(named: "ic_select_tick_icon"), for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = -11
+            followCell.requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
+        } else {
+            followCell.requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
+            followCell.requestBtn.setImage(nil, for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = 0
+            followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
+        }
         followCell.requestBtn.isEnabled = false
     }
     
@@ -255,8 +277,11 @@ extension PeopleFollowListViewController {
                 return
             }
             
-            let buttonTitle = RelationTypes.kFollow.rawValue
-            followCell.requestBtn.setTitle(buttonTitle, for: .normal)
+            followCell.requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
+            followCell.requestBtn.setImage(nil, for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = 0
+            followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
             followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -296,8 +321,11 @@ extension PeopleFollowListViewController {
                 return
             }
             
-            let buttonTitle = RelationTypes.kFollow.rawValue
-            followCell.requestBtn.setTitle(buttonTitle, for: .normal)
+            followCell.requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
+            followCell.requestBtn.setImage(nil, for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = 0
+            followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
             followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -342,8 +370,11 @@ extension PeopleFollowListViewController {
             return
         }
         
-        let buttonTitle = RelationTypes.kFollow.rawValue
-        followCell.requestBtn.setTitle(buttonTitle, for: .normal)
+        followCell.requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
+        followCell.requestBtn.setImage(nil, for: .normal)
+        followCell.requestBtn.contentEdgeInsets.left = 0
+        followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
+        followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
         followCell.requestBtn.isEnabled = false
     }
     

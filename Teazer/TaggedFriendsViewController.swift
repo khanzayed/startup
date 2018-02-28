@@ -105,12 +105,12 @@ extension TaggedFriendsViewController: UITableViewDataSource, UITableViewDelegat
             }
             
             if let urlStr = friend.profileMedia?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                         
-                        if resizedImage != nil, let cell = self?.tableView.cellForRow(at: indexPath) as? TaggedFriendsTableViewCell {
+                        if resizedImage != nil, let cell = self?.tableView.cellForRow(at: lastIndexPath) as? TaggedFriendsTableViewCell {
                             cell.profileImageView.image = resizedImage
                         }
                     }
