@@ -23,6 +23,12 @@ class CommonAPIHandler:AppAPIHandler {
         }
     }
     
+    func getDataFromUrlWithId(imageURL: String, imageId:Int, indexPath:IndexPath, completion: @escaping (UIImage?, IndexPath, Int) -> ()) {
+        Alamofire.request(imageURL).responseImage { response in
+            completion(response.result.value, indexPath, imageId)
+        }
+    }
+    
     func getReportTypesListForPost(_ completionBlock:@escaping (ReportTypeDataModal) -> Void) {
         let url = baseURL +  "/v1/application/post/report/types"
         getCURLRequest(url: url, params: nil, method: .get)
