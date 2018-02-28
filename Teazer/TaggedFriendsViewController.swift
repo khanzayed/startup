@@ -16,12 +16,11 @@ class TaggedFriendsViewController: UIViewController {
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var postId:Int!
+    var postDetails: Post!
     var pageNo = 1
     var loaderView:LoaderView?
     var taggedFriends = [Friend]()
     let imageCache = AutoPurgingImageCache()
-    let homeDetailVC = HomePageDetailViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +48,7 @@ extension TaggedFriendsViewController {
             self.loaderView = LoaderView()
             self.loaderView?.addLoaderView(forView: self.view)
         }
-        HomeControllerAPIHandler().getTaggedFriends(postId, pageNo: pageNo) { [weak self] (responseData) in
+        HomeControllerAPIHandler().getTaggedFriends(postDetails.postId!, pageNo: pageNo) { [weak self] (responseData) in
             DispatchQueue.main.async {
                 self?.loaderView?.removeLoaderView()
             }
@@ -96,7 +95,7 @@ extension TaggedFriendsViewController {
                 DispatchQueue.main.async {
                     strongSelf.taggedFriends.remove(at: indexPath.row)
                     strongSelf.tableView.deleteRows(at: [indexPath], with: .right)
-                    
+                    strongSelf.postDetails.totalTag = strongSelf.taggedFriends.count
                 }
             }
         }
@@ -134,7 +133,7 @@ extension TaggedFriendsViewController: UITableViewDataSource, UITableViewDelegat
                 }
             }
             cell.blockUntagMyself = { [weak self] in
-                self?.untagMyself(postId: (self?.postId)!, indexPath: indexPath)
+                self?.untagMyself(postId: (self?.postDetails.postId!)!, indexPath: indexPath)
             }
             
             if let urlStr = friend.profileMedia?.thumbUrl {

@@ -152,6 +152,7 @@ class HomePageDetailViewController: UIViewController {
         
         if postDetails != nil {
             tagsCount = postDetails.totalTag
+            fetchTaggedFriendsList()
         }
     }
     
@@ -460,6 +461,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson1ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+          taggedPerson1ImageView.isHidden = true
         }
         
         if taggedFriends.count > 1 {
@@ -477,6 +480,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson2ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+           taggedPerson2ImageView.isHidden = true
         }
         
         if taggedFriends.count > 2 {
@@ -494,6 +499,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson3ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        }else{
+            taggedPerson3ImageView.isHidden = true
         }
         
         if taggedFriends.count > 3 {
@@ -511,6 +518,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson4ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+            taggedPerson4ImageView.isHidden = true
         }
         
         if taggedFriends.count > 4 {
@@ -527,6 +536,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson5ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+             taggedPerson5ImageView.isHidden = true
         }
         
         if taggedFriends.count > 5 {
@@ -561,6 +572,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson7ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+           taggedPerson7ImageView.isHidden = true
         }
         
         if taggedFriends.count > 7 {
@@ -577,6 +590,8 @@ class HomePageDetailViewController: UIViewController {
                     self.taggedPerson8ImageView.image = #imageLiteral(resourceName: "ic_male_default")
                 }
             }
+        } else {
+            taggedPerson8ImageView.isHidden = true
         }
         
         if taggedFriends.count > 8 {
@@ -595,6 +610,8 @@ class HomePageDetailViewController: UIViewController {
                 }
             }
             viewAllTaggedPersonImageView.image = UIImage(named: "")
+        } else {
+           taggedPerson9ImageView.isHidden = true
         }
 
     }
@@ -979,7 +996,7 @@ class HomePageDetailViewController: UIViewController {
         player?.pause()
         let storyboard = UIStoryboard(name: StoryboardOptions.Main.rawValue, bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "TaggedFriendsViewController") as! TaggedFriendsViewController
-        destinationVC.postId = postDetails.postId!
+        destinationVC.postDetails = postDetails
         self.navigationController?.pushViewController(destinationVC, animated: true)
         
     }
