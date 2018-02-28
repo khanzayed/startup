@@ -349,9 +349,9 @@ extension NewHomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
         if let list = post.mediaList, list.count > 0 {
             if let urlStr = list[0].thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
-                        if image != nil, let cell = self?.postsTableView.cellForRow(at: indexPath) as? NewPostTableViewCell {
+                        if image != nil, let cell = self?.postsTableView.cellForRow(at: lastIndexPath) as? NewPostTableViewCell {
                             cell.unhideDefaultViews()
                             cell.videoImageView.image = image
                         }
@@ -372,10 +372,10 @@ extension NewHomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
             if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath,key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.postsTableView.cellForRow(at: indexPath) as? NewPostTableViewCell {
+                        if let cell = self?.postsTableView.cellForRow(at: lastIndexPath) as? NewPostTableViewCell {
                             cell.imageProfile.image = resizedImage
                         }
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)

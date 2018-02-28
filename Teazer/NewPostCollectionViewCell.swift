@@ -536,18 +536,18 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
                     }
                 } else {
                     if let urlStr = reaction.mediaDetails?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrl(imageURL: urlStr) { (image) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                                 reaction.reactionImage = resizedImage
                                 
-                                if let cell = self?.reactionsCollectionView.cellForItem(at: indexPath) as? NewReactionCollectionViewCell {
+                                if let cell = self?.reactionsCollectionView.cellForItem(at: lastIndexPath) as? NewReactionCollectionViewCell {
                                     cell.showReactionDetails(reaction: reaction)
                                     cell.imageReaction.image = resizedImage
                                 }
-                                AppImageCache.saveReactionImage(image: image, reactionId: reaction.reactId!)
+                                AppImageCache.saveReactionImage(image: image, reactionId: key)
                             }
-                        }
+                        })
                     } else {
                         DispatchQueue.main.async {
                             reactionCell.imageReaction.image = nil

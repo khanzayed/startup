@@ -272,10 +272,10 @@ extension DiscoverNewViewController: UITableViewDataSource, UITableViewDelegate 
                     }
                 }
                 if let urlStr = friend.profileMedia?.thumbUrl {
-                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
                             let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                            if let cell = self?.searchTableView.cellForRow(at: indexPath) as? SearchTableViewCell {
+                            if let cell = self?.searchTableView.cellForRow(at: lastIndexPath) as? SearchTableViewCell {
                                 cell.cellImageView.image = resizedImage
                             }
                             AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -803,9 +803,9 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                 }
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.mostPopularCollectionView.cellForItem(at: indexPath) as? MostPopularPostCollectionViewCell {
+                                if let cell = self?.mostPopularCollectionView.cellForItem(at: lastIndexPath) as? MostPopularPostCollectionViewCell {
                                     cell.hideVides(value: false)
                                     cell.videoImageView.image = image
                                 }
@@ -822,10 +822,10 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         cell.profileImageView.image = #imageLiteral(resourceName: "ic_male_default")
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.mostPopularCollectionView.cellForItem(at: indexPath) as? MostPopularPostCollectionViewCell {
+                                if let cell = self?.mostPopularCollectionView.cellForItem(at: lastIndexPath) as? MostPopularPostCollectionViewCell {
                                     cell.profileImageView.image = resizedImage
                                 }
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -854,11 +854,11 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                 }
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
-                            DispatchQueue.main.async { [weak self] in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                            DispatchQueue.main.async {
                                 cell.hideVides(value: false)
                                 cell.videoImageView.image = image
-                            }
+                         AppImageCache.savePostImage(image: image, postId: key)                            }
                             AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
@@ -871,8 +871,8 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         cell.profileImageView.image = #imageLiteral(resourceName: "ic_male_default")
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
-                            DispatchQueue.main.async { [weak self] in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                            DispatchQueue.main.async {
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                                 cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -901,8 +901,8 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                 }
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
-                            DispatchQueue.main.async { [weak self] in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                            DispatchQueue.main.async {
                                 cell.hideVides(value: false)
                                 cell.videoImageView.image = image
                                 AppImageCache.savePostImage(image: image, postId: key)
@@ -918,7 +918,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         cell.profileImageView.image = #imageLiteral(resourceName: "ic_male_default")
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                                 cell.profileImageView.image = resizedImage
@@ -948,10 +948,10 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                 }
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
-                            DispatchQueue.main.async { [weak self] in
-                                    cell.hideVides(value: false)
-                                    cell.videoImageView.image = image
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                            DispatchQueue.main.async {
+                                cell.hideVides(value: false)
+                                cell.videoImageView.image = image
                             }
                             AppImageCache.savePostImage(image: image, postId: key)
                         })
@@ -965,7 +965,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         cell.profileImageView.image = #imageLiteral(resourceName: "ic_male_default")
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                                 cell.profileImageView.image = resizedImage
@@ -1005,9 +1005,9 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                 }
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.featuredCollectionView.cellForItem(at: indexPath) as? FeaturesVideosCollectionViewCell {
+                                if let cell = self?.featuredCollectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
                                     cell.hideVides(value: false)
                                     cell.videoImageView.image = image
                                 }
@@ -1028,10 +1028,10 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                         }
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async { [weak self] in
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.featuredCollectionView.cellForItem(at: indexPath) as? FeaturesVideosCollectionViewCell {
+                                if let cell = self?.featuredCollectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
                                     cell.profileImageView.image = resizedImage
                                 }
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
