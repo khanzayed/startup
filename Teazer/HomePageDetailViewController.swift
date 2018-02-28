@@ -596,13 +596,13 @@ class HomePageDetailViewController: UIViewController {
                 imageView.image = #imageLiteral(resourceName: "ic_male_default")
             }
         }
-        CommonAPIHandler().getDataFromUrlWithId(imageURL: imageURLStr, imageId: imageKey, completion: {  (image, key) in
+        CommonAPIHandler().getDataFromUrlWithId(imageURL: imageURLStr, imageId: imageKey) { (image, key) in
             DispatchQueue.main.async {
                 imageView.image = image
                 AppImageCache.saveOthersProfileImage(image: image, userId: key)
                 
             }
-        })
+        }
     }
     
     func startMarqueeLabelAnimation() {
@@ -1077,9 +1077,9 @@ extension HomePageDetailViewController: UICollectionViewDataSource, UICollection
             }
         } else {
             if let urlStr = reaction.mediaDetails?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
-                        if image != nil, let cell = self?.collectionView.cellForItem(at: indexPath) as? HomeDetailPageCollectionViewCell {
+                        if image != nil, let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? HomeDetailPageCollectionViewCell {
                             cell.imageView.image = image
                         }
                         AppImageCache.saveReactionImage(image: image, reactionId: key)
@@ -1100,9 +1100,9 @@ extension HomePageDetailViewController: UICollectionViewDataSource, UICollection
             }
 
             if let urlStr = reaction.reactionOwner?.profileMedia?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
-                        if image != nil, let cell = self?.collectionView.cellForItem(at: indexPath) as? HomeDetailPageCollectionViewCell {
+                        if image != nil, let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? HomeDetailPageCollectionViewCell {
                             cell.profileImageView.image = image
                         }
                         AppImageCache.saveOthersProfileImage(image: image, userId: key)

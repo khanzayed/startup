@@ -38,7 +38,7 @@ class NewReactionCollectionViewCell: UICollectionViewCell {
             hideReactionDetails()
             return
         }
-        getVideoImage(urlStr: thumbnailUrl, reaction: reation)
+//        getVideoImage(urlStr: thumbnailUrl, reaction: reation)
     }
     
     func getVideoImage(urlStr:String?, reaction:Reaction) {

@@ -695,9 +695,9 @@ extension UserProfileViewController: UITableViewDataSource, UITableViewDelegate 
             }
             if let list = postDetails.mediaList, list.count > 0 {
                 if let urlStr = list[0].thumbUrl {
-                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postDetails.postId!, completion: { (image, key) in
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postDetails.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
-                            if let cell = self?.tableView.cellForRow(at: indexPath) as? UserProfileVideoTableViewCell {
+                            if let cell = self?.tableView.cellForRow(at: lastIndexPath) as? UserProfileVideoTableViewCell {
                                 cell.videoImageView.image = image
                             }
                             AppImageCache.savePostImage(image: image, postId: key)
@@ -769,9 +769,9 @@ extension UserProfileViewController: UITableViewDataSource, UITableViewDelegate 
                 }
             } else {
                 if let urlStr = post.mediaDetails?.thumbUrl {
-                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.reactId!, completion: { (image, key) in
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
-                            if let cell = self?.tableView.cellForRow(at: indexPath) as? UserProfileVideoTableViewCell {
+                            if let cell = self?.tableView.cellForRow(at: lastIndexPath) as? UserProfileVideoTableViewCell {
                                 cell.videoImageView.image = image
                             }
                             AppImageCache.saveReactionImage(image: image, reactionId: key)

@@ -225,10 +225,10 @@ extension NotificationsViewController : UITableViewDelegate,UITableViewDataSourc
                 }
             }
             if let urlStr = notification.profileMedia?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.notificationsTableView.cellForRow(at: indexPath) as? NotificationsTableViewCell {
+                        if let cell = self?.notificationsTableView.cellForRow(at: lastIndexPath) as? NotificationsTableViewCell {
                             cell.profileImageView.image = resizedImage
                         }
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -268,10 +268,10 @@ extension NotificationsViewController : UITableViewDelegate,UITableViewDataSourc
             }
             
             if let urlStr = notification.metaData?.thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: notification.notificationId!, completion: { (image, key) in
+                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: notification.notificationId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.notificationsTableView.cellForRow(at: indexPath) as? NotificationsTableViewCell {
+                        if let cell = self?.notificationsTableView.cellForRow(at: lastIndexPath) as? NotificationsTableViewCell {
                             cell.postImageView.image = resizedImage
                         }
                         AppImageCache.saveNotificationPostImage(image: resizedImage, notificationId: key)
@@ -306,10 +306,10 @@ extension NotificationsViewController : UITableViewDelegate,UITableViewDataSourc
                     }
                 }
                 if let urlStr = notification.profileMedia?.thumbUrl {
-                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, completion: { (image, key) in
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
                             let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                            if let cell = self?.notificationsTableView.cellForRow(at: indexPath) as? NotificationsTableViewCell {
+                            if let cell = self?.notificationsTableView.cellForRow(at: lastIndexPath) as? NotificationsTableViewCell {
                                 cell.profileImageView.image = resizedImage
                             }
                             AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
