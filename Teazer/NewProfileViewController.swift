@@ -37,6 +37,7 @@ class NewProfileViewController: UIViewController {
     @IBOutlet weak var imageViewProfile: UIImageView!
     @IBOutlet weak var imageViewCover: UIImageView!
     @IBOutlet weak var imageToolBar: UIImageView!
+    @IBOutlet weak var collectionViewReactions: UICollectionView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lblUserNameTop: UILabel!
     @IBOutlet weak var headerView: ProfileHeaderView!
@@ -119,6 +120,11 @@ class NewProfileViewController: UIViewController {
             layout.cellPadding = 5.0
         }
         
+        if let layout = collectionViewReactions.collectionViewLayout as? HomePageLayout {
+            layout.delegate = self
+            layout.cellPadding = 5.0
+        }
+        
         setupView()
     }
     
@@ -136,6 +142,7 @@ class NewProfileViewController: UIViewController {
             viewFollow.isHidden = true
             fetchMyProfile()
             fetchMyCreations(pageNo: 1)
+            fetchMyReactions(pageNo: 1)
         } else if let userId = friendUserId {
             followInfo = UserProfileCache.shared.fetchFriendRelation(friendId: userId)?.followInfo
             fetchOthersProfile(userId: userId)
@@ -167,6 +174,7 @@ class NewProfileViewController: UIViewController {
         heightHeaderView = (UIScreen.main.bounds.width < 375) ? ((UIScreen.main.bounds.width * heightTableViewHeader) / 375.0) : heightTableViewHeader
         constraintProfileViewHeight.constant = heightHeaderView
         collectionView.contentInset = UIEdgeInsetsMake(heightHeaderView, 0, 0, 0)
+        collectionViewReactions.contentInset = UIEdgeInsetsMake(heightHeaderView, 0, 0, 0)
         
         gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: viewGradient.bounds.width, height: viewGradient.bounds.height + 10)
@@ -286,6 +294,10 @@ class NewProfileViewController: UIViewController {
     }
     
     @IBAction func myCreationsButtonTapped(_ sender: UIButton) {
+        if selectedVideosSection == .kMyCreations {
+            return
+        }
+        
         selectedVideosSection = .kMyCreations
         btnMyReactions.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
         btnMyCreations.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
@@ -294,14 +306,20 @@ class NewProfileViewController: UIViewController {
             self.viewButtonUnderline.layoutIfNeeded()
         }
         DispatchQueue.main.async {
-            let area = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 10)
+            let area = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
+            self.collectionViewReactions.scrollRectToVisible(area, animated: true)
             self.collectionView.scrollRectToVisible(area, animated: true)
         }
-        pageNoForCreations = 1
-        fetchMyCreations(pageNo: 1)
+        
+        collectionView.isHidden = false
+        collectionViewReactions.isHidden = true
     }
     
     @IBAction func myReactionsButtonTapped(_ sender: UIButton) {
+        if selectedVideosSection == .kMyReactions {
+            return
+        }
+        
         selectedVideosSection = .kMyReactions
         btnMyReactions.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
         btnMyCreations.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
@@ -310,11 +328,13 @@ class NewProfileViewController: UIViewController {
             self.viewButtonUnderline.layoutIfNeeded()
         }
         DispatchQueue.main.async {
-            let area = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 10)
+            let area = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
             self.collectionView.scrollRectToVisible(area, animated: true)
+            self.collectionViewReactions.scrollRectToVisible(area, animated: true)
         }
-        pageNoForReactions = 1
-        fetchMyReactions(pageNo: 1)
+        
+        collectionViewReactions.isHidden = false
+        collectionView.isHidden = true
     }
 
     @IBAction func followButtonTapped(_ sender: UIButton) {
@@ -746,24 +766,24 @@ extension NewProfileViewController {
             
             if let myReactions = responseData.reactions, myReactions.count > 0 {
                 if let value = responseData.nextPage {
-                        strongSelf.hasMoreCreations = value
+                        strongSelf.hasMoreReactions = value
                     }
                     
                     if pageNo == 1 {
                         DispatchQueue.main.async {
                             strongSelf.reactionsList = Array(myReactions)
-                            strongSelf.collectionView.reloadData()
+                            strongSelf.collectionViewReactions.reloadData()
                             self?.isWebserviceCallGoingOn = false
                         }
                     } else {
-                        let firstIndex = strongSelf.creationsList.count
-                        strongSelf.collectionView.performBatchUpdates({
+                        let firstIndex = strongSelf.reactionsList.count
+                        strongSelf.collectionViewReactions.performBatchUpdates({
                             DispatchQueue.main.async {
                                 for i in 0..<myReactions.count {
                                     let index = i + firstIndex
                                     strongSelf.reactionsList.append(myReactions[i])
                                     let indexPath = IndexPath(item: index, section: 0)
-                                    strongSelf.collectionView.insertItems(at: [indexPath])
+                                    strongSelf.collectionViewReactions.insertItems(at: [indexPath])
                                 }
                             }
                         }) { [weak self] (true) in
@@ -973,17 +993,19 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if selectedVideosSection == .kMyCreations {
+        if collectionView.tag == 101 {
             return creationsList.count
-        } else {
+        } else if collectionView.tag == 102 {
             return reactionsList.count
+        } else {
+            return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeaturesVideosCollectionViewCell", for: indexPath) as! FeaturesVideosCollectionViewCell
         
-        if selectedVideosSection == .kMyCreations {
+        if collectionView.tag == 101 {
             if indexPath.row < creationsList.count {
                 let post = creationsList[indexPath.row]
                 cell.setupCell(post: post)
@@ -1003,7 +1025,6 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                 if let postImage = AppImageCache.fetchPostImage(postId: post.postId!) {
                     DispatchQueue.main.async {
                         cell.videoImageView.image = postImage
-                        cell.hideVides(value: false)
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -1014,15 +1035,17 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                 if let list = post.mediaList, list.count > 0 {
                     if let urlStr = list[0].thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                                    cell.hideVides(value: false)
-                                    cell.videoImageView.image = image
-                                }
+                            DispatchQueue.main.async {
+//                                if let cell = self?.collectionView.cellForItem(at: indexPath) as? FeaturesVideosCollectionViewCell {
+//                                    cell.videoImageView.image = image
+//                                }
+                                cell.videoImageView.image = image
                                 AppImageCache.savePostImage(image: image, postId: key)
                             }
                         })
                     }
+                } else {
+                    cell.hideVides(value: true)
                 }
                 
                 if let postOwnerId = post.postOwner?.userId {
@@ -1037,11 +1060,12 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
+                            DispatchQueue.main.async {
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                                    cell.profileImageView.image = resizedImage
-                                }
+//                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
+//                                    cell.profileImageView.image = resizedImage
+//                                }
+                                cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
                         })
@@ -1052,10 +1076,11 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                     }
                 }
             }
-        } else {
+        } else if collectionView.tag == 102 {
             if indexPath.row < reactionsList.count {
                 let reaction = reactionsList[indexPath.row]
                 cell.showReactionDetails(reaction: reaction)
+                cell.showReactionOwnerName(userName: userProfile?.user?.userName)
                 
                 cell.moreTappedBlock = { [weak self] in
                     self?.showMoreOptionForReaction(reaction: reaction, indexPath: indexPath)
@@ -1064,7 +1089,6 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                 if let reactionImage = AppImageCache.fetchReactionImage(reactionId: reaction.reactId!) {
                     DispatchQueue.main.async {
                         cell.videoImageView.image = reactionImage
-                        cell.hideVides(value: false)
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -1075,15 +1099,17 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                 if let reactionDetails = reaction.mediaDetails {
                     if let urlStr = reactionDetails.thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
-                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                                    cell.hideVides(value: false)
-                                    cell.videoImageView.image = image
-                                }
+                            DispatchQueue.main.async {
+//                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
+//                                    cell.videoImageView.image = image
+//                                }
+                                cell.videoImageView.image = image
                                 AppImageCache.saveReactionImage(image: image, reactionId: key)
                             }
                         })
                     }
+                } else {
+                    cell.hideVides(value: true)
                 }
                 
                 if let reactionOwnerId = reaction.reactId {
@@ -1098,11 +1124,12 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                     }
                     if let urlStr = reaction.reactionOwner?.profileMedia?.thumbUrl! {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reactionOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
+                            DispatchQueue.main.async {
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                                    cell.profileImageView.image = resizedImage
-                                }
+//                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
+//                                    cell.profileImageView.image = resizedImage
+//                                }
+                                cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
                         })
@@ -1119,7 +1146,7 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
         if selectedVideosSection == .kMyCreations {
             pushToHomeDetailPageViewControllerForPost(index: indexPath.row)
         } else {
-            presentReactionDetailPageViewControllerForPost(index: indexPath.row)
+            presentReactionDetailPageViewControllerForPost(index: indexPath.row, indexPath: indexPath)
         }
     }
     
@@ -1129,9 +1156,18 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
 extension NewProfileViewController: HomePageLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let post = creationsList[indexPath.row]
-        let height = post.mediaList![0].height! * (UIScreen.main.bounds.width / 2) / post.mediaList![0].width!
-        return (height > 175.0)  ? height : 175.0
+        if collectionView.tag == 101 {
+            let post = creationsList[indexPath.row]
+            let height = post.mediaList![0].height! * (UIScreen.main.bounds.width / 2) / post.mediaList![0].width!
+            return (height > 175.0)  ? height : 175.0
+        } else if collectionView.tag == 102 {
+            let reaction = reactionsList[indexPath.row]
+            let height = reaction.mediaDetails!.height! * (UIScreen.main.bounds.width / 2) / reaction.mediaDetails!.width!
+            return (height > 175.0)  ? height : 175.0
+        } else {
+            return 0
+        }
+        
     }
 
 }
@@ -1261,10 +1297,20 @@ extension NewProfileViewController {
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
-    func presentReactionDetailPageViewControllerForPost(index:Int) {
+    func presentReactionDetailPageViewControllerForPost(index:Int,indexPath:IndexPath) {
         let storyboard = UIStoryboard(name: StoryboardOptions.Main.rawValue, bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "ReactionDetailsViewController") as! ReactionDetailsViewController
         destinationVC.reactionId = reactionsList[index].reactId!
+        destinationVC.updateReactionBlock = { [weak self] (views, likes) in
+            if views != nil {
+                self?.reactionsList[indexPath.row].views! += views!
+            } else if likes != nil {
+                self?.reactionsList[indexPath.row].canLike = (likes! > 0) ? false : true
+                self?.reactionsList[indexPath.row].likes! += likes!
+            }
+            self?.collectionView.reloadItems(at: [indexPath])
+        }
+
         self.navigationController?.present(destinationVC, animated: true, completion: nil)
     }
     
@@ -1348,6 +1394,13 @@ extension NewProfileViewController: UIScrollViewDelegate {
         let y = heightHeaderView - (scrollView.contentOffset.y + heightHeaderView)
         let height = min(max(y, 110), 550)
         constraintProfileViewHeight.constant = height
+//        if collectionView != nil, collectionViewReactions != nil {
+//            if collectionView.tag == 101 {
+//                collectionViewReactions.setContentOffset(CGPoint(x: 0,y: height), animated: true)
+//            } else {
+//                collectionView.setContentOffset(CGPoint(x: 0,y: height), animated: true)
+//            }
+//        }
         
         let diff = (heightHeaderView - y) / heightHeaderView
         viewToolBar.alpha = min(max(diff, 0), 0.7)
@@ -1379,7 +1432,7 @@ extension NewProfileViewController: UIScrollViewDelegate {
         } else if hasMoreReactions && selectedVideosSection == .kMyReactions {
             if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height && !isWebserviceCallGoingOn {
                 pageNoForReactions += 1
-                if let othersId = friendUserId {
+                if friendUserId != nil {
                     
                 } else {
                     fetchMyReactions(pageNo: pageNoForReactions)
@@ -1388,6 +1441,5 @@ extension NewProfileViewController: UIScrollViewDelegate {
         }
         
     }
-    
 }
 

@@ -25,6 +25,8 @@ class BaseCollectionViewCell: UICollectionViewCell {
     var isWebserviceCallGoingOn = false
     var category:Category!
     var indexList = [Int]()
+    var lastCategoryId:Int!
+    var interestsPost = [Post]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,7 +47,7 @@ class BaseCollectionViewCell: UICollectionViewCell {
         noInternetView.isHidden = true
         
         if indexList.count == 0 {
-            fetchPostsForCategory(category.categoryId!, pageNo: pageNo)
+            fetchPostsForCategory(category.categoryId!, pageNo: 1)
         } else {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -62,13 +64,13 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return indexList.count
+        return interestsPost.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeaturesVideosCollectionViewCell", for: indexPath) as! FeaturesVideosCollectionViewCell
         
-        let post = PostCacheData.shared.posts[indexList[indexPath.row]]
+        let post = interestsPost[indexPath.row]
         cell.setupCell(post: post)
         
         if let postImage = AppImageCache.fetchPostImage(postId: post.postId!) {
@@ -92,7 +94,6 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
                 })
             }
         }
-        
         if let postOwnerId = post.postOwner?.userId {
             if let postImage = AppImageCache.fetchOthersProfileImage(userId: postOwnerId) {
                 DispatchQueue.main.async {
@@ -129,7 +130,7 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         if !Connectivity.isConnectedToInternet() {
             return
         }
-        if let postId = PostCacheData.shared.posts[indexList[indexPath.row]].postId {
+        if let postId = interestsPost[indexPath.row].postId {
             cellTappedBlock?(postId)
         }
     }
@@ -139,8 +140,8 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
 extension BaseCollectionViewCell: HomePageLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let indexList = PostCacheData.shared.fetchCategoryVideos(categoryId: category.categoryId!)
-        let post = PostCacheData.shared.posts[indexList[indexPath.row]]
+        //let indexList = PostCacheData.shared.fetchCategoryVideos(categoryId: category.categoryId!)
+        let post = interestsPost[indexPath.row]
         let height = post.mediaList![0].height! * (UIScreen.main.bounds.width / 2) / post.mediaList![0].width!
         return (height > 175.0)  ? height : 175.0
     }
@@ -167,8 +168,11 @@ extension BaseCollectionViewCell {
             
             if let list = responseData.posts {
                 self?.noInternetView.isHidden = true
-                PostCacheData.shared.savePostsIndexToCategoryList(categoryId, videos: list)
-                strongSelf.indexList = PostCacheData.shared.fetchCategoryVideos(categoryId: categoryId)
+                if strongSelf.interestsPost.count == 0 || strongSelf.lastCategoryId != categoryId {
+                    strongSelf.interestsPost = list
+                } else if strongSelf.lastCategoryId == categoryId {
+                    strongSelf.interestsPost.append(contentsOf: list)
+                }
                 if list.count == 0 {
                     DispatchQueue.main.async {
                         self?.noInternetView.isHidden = false
@@ -196,6 +200,7 @@ extension BaseCollectionViewCell {
                     strongSelf.collectionView.reloadData()
                 }
             }
+            strongSelf.lastCategoryId = categoryId
         }
     }
     

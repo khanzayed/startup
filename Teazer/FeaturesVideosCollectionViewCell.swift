@@ -69,13 +69,15 @@ class FeaturesVideosCollectionViewCell: UICollectionViewCell {
     }
     
     func hideVides(value:Bool) {
-        blankDetailView.isHidden = !value
-        detailView.isHidden = value
-        shadowTopView.isHidden = value
-        shadowBottomView.isHidden = value
-        titleLbl.isHidden = value
-        if categoryNameLbl != nil {
-            categoryBackView.isHidden = value
+        DispatchQueue.main.async {
+            self.blankDetailView.isHidden = !value
+            self.detailView.isHidden = value
+            self.shadowTopView.isHidden = value
+            self.shadowBottomView.isHidden = value
+            self.titleLbl.isHidden = value
+            if self.categoryNameLbl != nil {
+                self.categoryBackView.isHidden = value
+            }
         }
     }
     
@@ -131,13 +133,16 @@ extension FeaturesVideosCollectionViewCell {
         }
     }
     
+    func showReactionOwnerName(userName:String?) {
+        userNameLbl.text = userName ?? ""
+    }
+    
     
     func showReactionDetails(reaction:Reaction) {
         guard let _ = reaction.mediaDetails else {
             return
         }
         hideVides(value: false)
-        userNameLbl.text = reaction.reactionOwner?.userName ?? ""
         titleLbl.text = reaction.reactTitle?.decode() ?? ""
         viewsLbl.text = "\(reaction.views!)"
         likesLbl.text = "\(reaction.likes!)"

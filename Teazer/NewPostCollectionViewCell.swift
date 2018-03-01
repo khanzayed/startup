@@ -63,7 +63,7 @@ class NewPostTableViewCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var btnCategory: UIButton!
     
-    private var reactionsList = [Reaction]()
+    var reactionsList = [Reaction]()
     private var areReactionsPresent = false
     private var avPlayer:AVPlayer?
     private var avPlayerItem:AVPlayerItem?
@@ -106,6 +106,9 @@ class NewPostTableViewCell: UITableViewCell {
         reactionsCollectionView.delegate = self
         btnVolume.isHidden = true
         btnPlay.isHidden = true
+        
+        videoImageView.image = nil
+        imageProfile.image = nil
     }
     
     func setupCell(postDetails:Post) {
@@ -113,26 +116,8 @@ class NewPostTableViewCell: UITableViewCell {
         postOwnerId = postDetails.postOwner?.userId
         isMyself = postDetails.canDelete
         canReact = postDetails.canReact
-        if let totalReactions = postDetails.totalReactions, totalReactions > 0 {
-            if let list = postDetails.reactions, list.count > 0 {
-                DispatchQueue.main.async {
-                    self.reactionsList = list
-                    self.reactionsCollectionView.isHidden = false
-                    self.reactionsCollectionView.reloadData()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.reactionsCollectionView.isHidden = true
-                }
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.reactionsCollectionView.isHidden = true
-            }
-        }
         
         btnPlay.isHidden = AppPreferences.getIsVideoAutoPlay()
-        getProfileImage(urlStr: postDetails.postOwner?.profileMedia?.thumbUrl, post: postDetails)
         showPostDetails(postDetails: postDetails)
         
         pauseVideo()
@@ -491,7 +476,8 @@ extension NewPostTableViewCell {
                         imageView.addSubview(imageView1)
                     }
                 } else {
-                    return
+                    let imageView1 = UIImageView(image: nil)
+                    imageView.addSubview(imageView1)
                 }
         }
 }
@@ -526,34 +512,32 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
             reactionCell.setupCell(reation: reaction)
             
             if let reactionImage = AppImageCache.fetchReactionImage(reactionId: reaction.reactId!) {
-                DispatchQueue.main.async {
-                    reactionCell.imageReaction.image = reactionImage
-                }
+                reactionCell.imageReaction.image = reactionImage
+                reactionCell.showReactionDetails(reaction: reaction)
             } else {
+                reactionCell.hideReactionDetails()
+
                 if reaction.mediaDetails?.mediaType == 4 {
-                    DispatchQueue.global(qos: .background).async {
-                        self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction)
-                    }
-                } else {
-                    if let urlStr = reaction.mediaDetails?.thumbUrl {
-                        CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
-                                let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                                reaction.reactionImage = resizedImage
+                    self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction)
+                } else if let urlStr = reaction.mediaDetails?.thumbUrl {
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                        DispatchQueue.main.async { [weak self] in
+                            let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
+                            reaction.reactionImage = resizedImage
                                 
-                                if let cell = self?.reactionsCollectionView.cellForItem(at: lastIndexPath) as? NewReactionCollectionViewCell {
-                                    cell.showReactionDetails(reaction: reaction)
-                                    cell.imageReaction.image = resizedImage
-                                }
-                                AppImageCache.saveReactionImage(image: image, reactionId: key)
+                            if let cell = self?.reactionsCollectionView.cellForItem(at: indexPath) as? NewReactionCollectionViewCell {
+                                cell.showReactionDetails(reaction: reaction)
+                                cell.imageReaction.image = resizedImage
                             }
+                        }
+                            AppImageCache.saveReactionImage(image: image, reactionId: key)
                         })
                     } else {
                         DispatchQueue.main.async {
                             reactionCell.imageReaction.image = nil
+
                         }
                     }
-                }
             }
         } else {
             reactionCell.hideReactionDetails()

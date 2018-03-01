@@ -339,43 +339,35 @@ extension NewHomeViewController: UITableViewDataSource, UITableViewDelegate {
         lastCreatedCellIndexPath = indexPath
         
         if let postImage = AppImageCache.fetchPostImage(postId: post.postId!) {
-            DispatchQueue.main.async {
-                postCell?.videoImageView.image = postImage
-            }
+            postCell?.videoImageView.image = postImage
         } else {
-            DispatchQueue.main.async {
-                postCell?.videoImageView.image = nil
-            }
-        }
-        if let list = post.mediaList, list.count > 0 {
-            if let urlStr = list[0].thumbUrl {
-                CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                    DispatchQueue.main.async { [weak self] in
-                        if image != nil, let cell = self?.postsTableView.cellForRow(at: lastIndexPath) as? NewPostTableViewCell {
-                            cell.unhideDefaultViews()
-                            cell.videoImageView.image = image
+            postCell?.videoImageView.image = nil
+            if let list = post.mediaList, list.count > 0 {
+                if let urlStr = list[0].thumbUrl {
+                    CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                        DispatchQueue.main.async { [weak self] in
+                            if image != nil, let cell = self?.postsTableView.cellForRow(at: indexPath) as? NewPostTableViewCell {
+                                cell.unhideDefaultViews()
+                                cell.videoImageView.image = image
+                            }
+                            AppImageCache.savePostImage(image: image, postId: key)
                         }
-                        AppImageCache.savePostImage(image: image, postId: key)
-                    }
-                })
+                    })
+                }
             }
         }
         
         if let postOwnerId = post.postOwner?.userId {
             if let postImage = AppImageCache.fetchOthersProfileImage(userId: postOwnerId) {
-                DispatchQueue.main.async {
-                    postCell?.imageProfile.image = postImage
-                }
+                postCell?.imageProfile.image = postImage
             } else {
-                DispatchQueue.main.async {
-                    postCell?.imageProfile.image = #imageLiteral(resourceName: "ic_male_default")
-                }
+                postCell?.imageProfile.image = #imageLiteral(resourceName: "ic_male_default")
             }
             if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
                 CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath,key) in
                     DispatchQueue.main.async { [weak self] in
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.postsTableView.cellForRow(at: lastIndexPath) as? NewPostTableViewCell {
+                        if let cell = self?.postsTableView.cellForRow(at: indexPath) as? NewPostTableViewCell {
                             cell.imageProfile.image = resizedImage
                         }
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
@@ -383,9 +375,19 @@ extension NewHomeViewController: UITableViewDataSource, UITableViewDelegate {
                 })
             }
         } else {
-            DispatchQueue.main.async {
-                postCell?.imageProfile.image = #imageLiteral(resourceName: "ic_male_default")
+            postCell?.imageProfile.image = #imageLiteral(resourceName: "ic_male_default")
+        }
+        
+        if let totalReactions = post.totalReactions, totalReactions > 0 {
+            if let list = post.reactions, list.count > 0 {
+                postCell?.reactionsList = list
+                postCell?.reactionsCollectionView.isHidden = false
+                postCell?.reactionsCollectionView.reloadData()
+            } else {
+                postCell?.reactionsCollectionView.isHidden = true
             }
+        } else {
+            postCell?.reactionsCollectionView.isHidden = true
         }
         
         return postCell!
@@ -554,8 +556,7 @@ extension NewHomeViewController: UIScrollViewDelegate {
                     cell.playVideo()
                 }
             }
-        
-            
+
             lastVideoPlayingCellIndexPath = cellIndexPath
         }
     }

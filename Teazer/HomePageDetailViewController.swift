@@ -968,7 +968,7 @@ class HomePageDetailViewController: UIViewController {
     }
 
     @IBAction func taggedButtonTapped(_ sender: UIButton) {
-        guard let postId = postDetails.postId else {
+        guard postDetails.postId != nil else {
             return
         }
         
