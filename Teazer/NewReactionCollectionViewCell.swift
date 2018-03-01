@@ -24,6 +24,8 @@ class NewReactionCollectionViewCell: UICollectionViewCell {
         
         imageReaction.layer.cornerRadius = 2.0
         imageReaction.image = nil
+        
+        lblTitle.text = ""
     }
     
     override func prepareForReuse() {
