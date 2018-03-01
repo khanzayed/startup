@@ -554,8 +554,7 @@ extension NewHomeViewController: UIScrollViewDelegate {
                     cell.playVideo()
                 }
             }
-        
-            
+
             lastVideoPlayingCellIndexPath = cellIndexPath
         }
     }

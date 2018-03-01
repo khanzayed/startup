@@ -491,7 +491,8 @@ extension NewPostTableViewCell {
                         imageView.addSubview(imageView1)
                     }
                 } else {
-                    return
+                    let imageView1 = UIImageView(image: nil)
+                    imageView.addSubview(imageView1)
                 }
         }
 }
@@ -551,6 +552,8 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
                     } else {
                         DispatchQueue.main.async {
                             reactionCell.imageReaction.image = nil
+                            reactionCell.defaultImageView.isHidden = false
+                            reactionCell.defaultTitleView.isHidden = false
                         }
                     }
                 }

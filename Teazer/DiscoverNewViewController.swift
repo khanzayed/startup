@@ -176,8 +176,9 @@ class DiscoverNewViewController: UIViewController {
     // MARK:- Refresh control
     func addPullToRefresh() {
         refreshControl = UIRefreshControl()
+        refreshControl?.beginRefreshing()
         refreshControl?.addTarget(self, action: #selector(refreshOptions(sender:)), for: .valueChanged)
-        scrollView.refreshControl = refreshControl
+        self.scrollView.refreshControl = refreshControl
     }
     
     @objc func refreshOptions(sender: UIRefreshControl) {
@@ -190,6 +191,7 @@ class DiscoverNewViewController: UIViewController {
         
         fetchLandingPage()
         fetchFeaturedVideos(pageNo: pageNoForFeaturedVideos)
+        refreshControl?.endRefreshing()
     }
     
     @IBAction func viewAllMostPopularVideos(sender: UIButton) {
@@ -858,7 +860,7 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                             DispatchQueue.main.async {
                                 cell.hideVides(value: false)
                                 cell.videoImageView.image = image
-                         AppImageCache.savePostImage(image: image, postId: key)                            }
+                            }
                             AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
@@ -905,8 +907,8 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                             DispatchQueue.main.async {
                                 cell.hideVides(value: false)
                                 cell.videoImageView.image = image
-                                AppImageCache.savePostImage(image: image, postId: key)
                             }
+                            AppImageCache.savePostImage(image: image, postId: key)
                         })
                     }
                 }
@@ -919,11 +921,11 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                            DispatchQueue.main.async { [weak self] in
-                                let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
+                            let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
+                            DispatchQueue.main.async {
                                 cell.profileImageView.image = resizedImage
-                                AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
+                            AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                         })
                     }
                 } else {
@@ -966,11 +968,11 @@ extension DiscoverNewViewController: UICollectionViewDataSource, UICollectionVie
                     }
                     if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
+                            let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                             DispatchQueue.main.async { [weak self] in
-                                let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                                 cell.profileImageView.image = resizedImage
-                                AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
+                            AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                         })
                     }
                 } else {

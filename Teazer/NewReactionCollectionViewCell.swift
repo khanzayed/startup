@@ -38,6 +38,7 @@ class NewReactionCollectionViewCell: UICollectionViewCell {
             hideReactionDetails()
             return
         }
+        showReactionDetails(reaction: reation)
 //        getVideoImage(urlStr: thumbnailUrl, reaction: reation)
     }
     
