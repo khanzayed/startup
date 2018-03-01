@@ -476,7 +476,8 @@ extension NewPostTableViewCell {
                         imageView.addSubview(imageView1)
                     }
                 } else {
-                    return
+                    let imageView1 = UIImageView(image: nil)
+                    imageView.addSubview(imageView1)
                 }
         }
 }
@@ -528,12 +529,15 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
                                 cell.showReactionDetails(reaction: reaction)
                                 cell.imageReaction.image = resizedImage
                             }
-                            AppImageCache.saveReactionImage(image: image, reactionId: key)
                         }
-                    })
-                } else {
-                    reactionCell.hideReactionDetails()
-                }
+                            AppImageCache.saveReactionImage(image: image, reactionId: key)
+                        })
+                    } else {
+                        DispatchQueue.main.async {
+                            reactionCell.imageReaction.image = nil
+
+                        }
+                    }
             }
         } else {
             reactionCell.hideReactionDetails()

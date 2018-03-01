@@ -678,7 +678,6 @@ extension NotificationsViewController: UIScrollViewDelegate {
         destinationVC.reactionId = reactionId
         DispatchQueue.main.async {
             self.navigationController?.present(destinationVC, animated: true, completion: nil)
-
         }
     }
  }

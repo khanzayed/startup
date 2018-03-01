@@ -82,7 +82,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
                 return
             }
             
-            print(asset)
             if let urlAsset = asset as? AVURLAsset {
                 strongSelf.dismiss(animated: true, completion: {
                     strongSelf.pushToVideoTrimmerControllerBlock?(urlAsset.url, Float(CMTimeGetSeconds(urlAsset.duration)))

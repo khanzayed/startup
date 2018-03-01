@@ -1146,7 +1146,7 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
         if selectedVideosSection == .kMyCreations {
             pushToHomeDetailPageViewControllerForPost(index: indexPath.row)
         } else {
-            presentReactionDetailPageViewControllerForPost(index: indexPath.row)
+            presentReactionDetailPageViewControllerForPost(index: indexPath.row, indexPath: indexPath)
         }
     }
     
@@ -1297,10 +1297,20 @@ extension NewProfileViewController {
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
-    func presentReactionDetailPageViewControllerForPost(index:Int) {
+    func presentReactionDetailPageViewControllerForPost(index:Int,indexPath:IndexPath) {
         let storyboard = UIStoryboard(name: StoryboardOptions.Main.rawValue, bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "ReactionDetailsViewController") as! ReactionDetailsViewController
         destinationVC.reactionId = reactionsList[index].reactId!
+        destinationVC.updateReactionBlock = { [weak self] (views, likes) in
+            if views != nil {
+                self?.reactionsList[indexPath.row].views! += views!
+            } else if likes != nil {
+                self?.reactionsList[indexPath.row].canLike = (likes! > 0) ? false : true
+                self?.reactionsList[indexPath.row].likes! += likes!
+            }
+            self?.collectionView.reloadItems(at: [indexPath])
+        }
+
         self.navigationController?.present(destinationVC, animated: true, completion: nil)
     }
     
@@ -1422,7 +1432,7 @@ extension NewProfileViewController: UIScrollViewDelegate {
         } else if hasMoreReactions && selectedVideosSection == .kMyReactions {
             if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height && !isWebserviceCallGoingOn {
                 pageNoForReactions += 1
-                if let othersId = friendUserId {
+                if friendUserId != nil {
                     
                 } else {
                     fetchMyReactions(pageNo: pageNoForReactions)
@@ -1431,6 +1441,5 @@ extension NewProfileViewController: UIScrollViewDelegate {
         }
         
     }
-    
 }
 
