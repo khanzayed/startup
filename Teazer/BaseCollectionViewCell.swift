@@ -85,10 +85,8 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         if let list = post.mediaList, list.count > 0 {
             if let urlStr = list[0].thumbUrl {
                 CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: post.postId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                    DispatchQueue.main.async { [weak self] in
-                        if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                            cell.videoImageView.image = image
-                        }
+                    DispatchQueue.main.async {
+                        cell.videoImageView.image = image
                         AppImageCache.savePostImage(image: image, postId: key)
                     }
                 })
@@ -106,11 +104,9 @@ extension BaseCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
             }
             if let urlStr = post.postOwner?.profileMedia?.thumbUrl {
                 CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: postOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.async {
                         let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-                        if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-                            cell.profileImageView.image = resizedImage
-                        }
+                        cell.profileImageView.image = resizedImage
                         AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                     }
                 })

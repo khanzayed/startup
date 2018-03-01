@@ -476,9 +476,8 @@ extension NewPostTableViewCell {
                         imageView.addSubview(imageView1)
                     }
                 } else {
-                    let imageView1 = UIImageView(image: nil)
-                    imageView.addSubview(imageView1)
-                }
+                 return
+            }
         }
 }
     
@@ -518,7 +517,9 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
                 reactionCell.hideReactionDetails()
 
                 if reaction.mediaDetails?.mediaType == 4 {
-                    self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction)
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction)
+                    }
                 } else if let urlStr = reaction.mediaDetails?.thumbUrl {
                     CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
