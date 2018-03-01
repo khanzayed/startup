@@ -466,7 +466,7 @@ extension NewPostTableViewCell {
         }
     }
     
-    func loadGif(url: String , imageView: UIImageView) {
+    func loadGif(url: String , imageView: UIImageView, reactionId:Int) {
         let dict = convertToDictionary(text: url)
         if let stillDict = dict!["fixed_height_small_still"] as? [String:Any] {
             if (stillDict["url"] as? String) != nil {
@@ -474,6 +474,7 @@ extension NewPostTableViewCell {
                     DispatchQueue.main.async {
                         let imageView1 = UIImageView(image: imageURL)
                         imageView.addSubview(imageView1)
+                       AppImageCache.saveReactionImage(image: imageURL, reactionId: reactionId)
                     }
                 } else {
                  return
@@ -518,20 +519,19 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
 
                 if reaction.mediaDetails?.mediaType == 4 {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction)
+                        self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: reactionCell.imageReaction, reactionId: reaction.reactId!)
                     }
                 } else if let urlStr = reaction.mediaDetails?.thumbUrl {
                     CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                         DispatchQueue.main.async { [weak self] in
                             let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
                             reaction.reactionImage = resizedImage
-                                
                             if let cell = self?.reactionsCollectionView.cellForItem(at: indexPath) as? NewReactionCollectionViewCell {
                                 cell.showReactionDetails(reaction: reaction)
                                 cell.imageReaction.image = resizedImage
                             }
+                            AppImageCache.saveReactionImage(image: resizedImage, reactionId: key)
                         }
-                            AppImageCache.saveReactionImage(image: image, reactionId: key)
                         })
                     } else {
                         DispatchQueue.main.async {
@@ -543,7 +543,6 @@ extension NewPostTableViewCell: UICollectionViewDataSource, UICollectionViewDele
         } else {
             reactionCell.hideReactionDetails()
         }
-        
         return reactionCell
     }
     
