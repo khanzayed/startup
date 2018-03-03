@@ -842,7 +842,7 @@ extension NewProfileViewController {
                 if responseData.status == true {
                     DispatchQueue.main.async {
                         strongSelf.reactionsList.remove(at: indexPath.row)
-                        strongSelf.collectionView.deleteItems(at: [indexPath])
+                        strongSelf.collectionViewReactions.deleteItems(at: [indexPath])
                     }
                 }
             }
@@ -955,6 +955,7 @@ extension NewProfileViewController {
             
             if responseData.status == true {
                 strongSelf.followInfo?.blocked = false
+                strongSelf.followInfo?.isFollowing = false
                 UserProfileCache.shared.updateFollowInfo(friendId: friendId, followInfo: strongSelf.followInfo)
             }
         }
