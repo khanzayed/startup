@@ -1098,6 +1098,10 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                 }
                 
                 if let reactionDetails = reaction.mediaDetails {
+                    
+                    if reactionDetails.mediaType == 4 {
+                        loadGif(url: reactionDetails.externalMeta!, imageView: cell.videoImageView, reactionId: reaction.reactId!)
+                    }
                     if let urlStr = reactionDetails.thumbUrl {
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reaction.reactId!, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async {
@@ -1381,6 +1385,34 @@ extension NewProfileViewController {
             self.viewPrivateAccount.isHidden = true
         }
     }
+    
+    func loadGif(url: String , imageView: UIImageView, reactionId:Int) {
+        let dict = convertToDictionary(text: url)
+        if let stillDict = dict!["downsized"] as? [String:Any] {
+            if (stillDict["url"] as? String) != nil {
+                let imageURL = UIImage.gif(url: (stillDict["url"] as? String)!)
+                DispatchQueue.main.async {
+                    let imageView1 = UIImageView(image: imageURL)
+                    imageView.addSubview(imageView1)
+                    AppImageCache.saveReactionImage(image: imageURL, reactionId: reactionId)
+                }
+            } else {
+                return
+            }
+        }
+    }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
     
 }
 

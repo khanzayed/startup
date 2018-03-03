@@ -1103,7 +1103,7 @@ extension HomePageDetailViewController: UICollectionViewDataSource, UICollection
         }
         if reaction.mediaDetails?.mediaType == 4 {
             DispatchQueue.global(qos: .background).async {
-                self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: cell.imageView)
+                self.loadGif(url: reaction.mediaDetails!.externalMeta!, imageView: cell.imageView, reactionId: reaction.reactId!)
             }
         } else {
             if let urlStr = reaction.mediaDetails?.thumbUrl {
@@ -1444,16 +1444,22 @@ extension HomePageDetailViewController {
         })
     }
     
-    func loadGif(url: String , imageView: UIImageView) {
-        let dict  = convertToDictionary(text: url)
-        let downsizedGif = dict!["downsized"] as? [String:Any]
-        let imageURL = UIImage.gif(url: (downsizedGif?["url"] as? String)!)
-        DispatchQueue.main.async {
-            let imageView1 = UIImageView(image: imageURL)
-            imageView1.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: imageView.frame.size.height)
-            imageView.addSubview(imageView1)
+    func loadGif(url: String , imageView: UIImageView, reactionId:Int) {
+        let dict = convertToDictionary(text: url)
+        if let stillDict = dict!["downsized"] as? [String:Any] {
+            if (stillDict["url"] as? String) != nil {
+                let imageURL = UIImage.gif(url: (stillDict["url"] as? String)!)
+                DispatchQueue.main.async {
+                    let imageView1 = UIImageView(image: imageURL)
+                    imageView.addSubview(imageView1)
+                    AppImageCache.saveReactionImage(image: imageURL, reactionId: reactionId)
+                }
+            } else {
+                return
+            }
         }
     }
+
 
     func convertToDictionary(text: String) -> [String: Any]? {
         if let data = text.data(using: .utf8) {

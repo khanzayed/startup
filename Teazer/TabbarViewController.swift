@@ -41,6 +41,8 @@ class TabbarViewController: UITabBarController {
     var reactionPostId:Int!
     var cameraAPIHandler:CameraControllerAPIHandler?
     var isUploading = false
+    var isUpdateAvailable = false
+    var isForceUpdateAvailable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +80,7 @@ class TabbarViewController: UITabBarController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         let launchedBefore = UserDefaults.standard.bool(forKey: "isSecondTimeForHome")
         if launchedBefore  {
            return

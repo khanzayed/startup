@@ -10,6 +10,9 @@ import UIKit
 import SwiftKeychainWrapper
 
 class BaseViewController: UIViewController {
+    
+    var isUpdateAvailable = false
+    var isForceUpdateAvailable = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,12 @@ class BaseViewController: UIViewController {
             guard let strongSelf = self else {
                 return
             }
+            if let error = responseData.errorObject{
+                self?.view.makeToast(error.message)
+            }
+            strongSelf.isUpdateAvailable = responseData.isUpdateAvailable
+            strongSelf.isForceUpdateAvailable = responseData.isForceUpdate
+            
             strongSelf.getNotificationsData()
             (User().getAuthToken() != nil) ? strongSelf.launchHomePage() : strongSelf.launchBaseLoginPage()
         }
@@ -38,6 +47,8 @@ class BaseViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabbarCntrlr = storyboard.instantiateViewController(withIdentifier: "TabbarViewController") as! TabbarViewController
         tabbarCntrlr.selectedIndex = TabbarControllerIndex.kHomeVCIndex.rawValue
+        tabbarCntrlr.isUpdateAvailable = isUpdateAvailable
+        tabbarCntrlr.isForceUpdateAvailable = isForceUpdateAvailable
         self.navigationController?.pushViewController(tabbarCntrlr, animated: true)
     }
 

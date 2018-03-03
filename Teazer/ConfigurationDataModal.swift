@@ -21,7 +21,7 @@ class ConfigurationDataModal: AppDataModal {
                 self.isForceUpdate = value
             }
             
-            if let value = responseDict["force_upupdate_availabledate"] as? Bool {
+            if let value = responseDict["update_available"] as? Bool {
                 self.isUpdateAvailable = value
             }
         }

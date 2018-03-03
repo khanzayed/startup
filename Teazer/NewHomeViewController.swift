@@ -48,6 +48,8 @@ class NewHomeViewController: UIViewController {
     var updatedPost:Post?
     var updatedReactionPostsList = [IndexPath]()
     var lastCreatedCellIndexPath:IndexPath?
+    var isForceUpdate = false
+    var isUpdateAvailable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +85,8 @@ class NewHomeViewController: UIViewController {
         noInternetView.isHidden = true
         let tabbarVC = self.navigationController?.tabBarController as! TabbarViewController
         tabbarVC.tabBar.bringSubview(toFront: tabbarVC.cameraBtn)
+        isForceUpdate = tabbarVC.isForceUpdateAvailable
+        isUpdateAvailable = tabbarVC.isUpdateAvailable
         tabbarVC.scrollToTopBlock = { [weak self] in
             DispatchQueue.main.async {
                 if self?.postsList.count != 0 {
@@ -120,6 +124,22 @@ class NewHomeViewController: UIViewController {
             interestingCategoriesVC.isNewUser = isNewUser
             tabBarController?.present(interestingCategoriesVC, animated: true, completion: { [weak self] in
                 self?.isNewUser = false
+            })
+        }
+        
+        if isUpdateAvailable {
+            ErrorView().showBasicAlertForUpdateWithCompletionBlock(title: "Update Available", actionTitle: "Update", message: "Your app is out of date. Please update the app to enjoy new added features", forVC: self, completionBlock: { _ in
+                let url  = URL(string: "https://itunes.apple.com/us/app/teazer-express-better/id1321899469?ls=1&mt=8")
+                if UIApplication.shared.canOpenURL(url!) == true  {
+                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                }
+            })
+        } else if isForceUpdate {
+            ErrorView().showAcknowledgementAlertForForceUpdateWithCompletionBlock(title: "Update Available", message: "Your app is out of date. Please update the app to continue", forVC: self, completionBlock: {_ in
+                let url  = URL(string: "https://itunes.apple.com/us/app/teazer-express-better/id1321899469?ls=1&mt=8")
+                if UIApplication.shared.canOpenURL(url!) == true  {
+                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                }
             })
         }
         
