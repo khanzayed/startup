@@ -548,14 +548,13 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         DispatchQueue.main.async {
             self.navigationController?.present(videoUploadVC, animated: true, completion: nil)
         }
-        
     }
     
     func pushToVideoTrimmerViewController(videoUrl:URL, duration:Float) {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
         let videoTrimmerVC = storyboard.instantiateViewController(withIdentifier: "VideoTrimmerViewController") as! VideoTrimmerViewController
         videoTrimmerVC.url = videoUrl
-        videoTrimmerVC.isFromReaction = (isRecordingReaction == true)
+        videoTrimmerVC.isFromReaction = isRecordingReaction 
         videoTrimmerVC.postDetails = postDetails
         videoTrimmerVC.durationInSecs = duration
         DispatchQueue.main.async {
