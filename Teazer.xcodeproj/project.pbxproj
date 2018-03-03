@@ -281,6 +281,8 @@
 		FE3C99601F73C6B100618ECE /* CameraControllerAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C995F1F73C6B100618ECE /* CameraControllerAPIHandler.swift */; };
 		FE3F0D461FBFA40E00EECF41 /* GifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F0D451FBFA40E00EECF41 /* GifExtension.swift */; };
 		FE459DFC1FC19DED002425C2 /* UserProfileFriendsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE459DFB1FC19DED002425C2 /* UserProfileFriendsListTableViewCell.swift */; };
+		FE4AC47B204A83A900470353 /* ConfigurationDataModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AC47A204A83A900470353 /* ConfigurationDataModal.swift */; };
+		FE4AC47C204A83A900470353 /* ConfigurationDataModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AC47A204A83A900470353 /* ConfigurationDataModal.swift */; };
 		FE51ED751FDDBBA2002A72CE /* InteractivePopRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE51ED741FDDBBA2002A72CE /* InteractivePopRecognizer.swift */; };
 		FE5719711FCC6B2600ECC61F /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5719701FCC6B2600ECC61F /* UpdatePasswordViewController.swift */; };
 		FE5719741FCCB53500ECC61F /* PopularVideosListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5719731FCCB53500ECC61F /* PopularVideosListViewController.swift */; };
@@ -513,6 +515,7 @@
 		FE3C995F1F73C6B100618ECE /* CameraControllerAPIHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraControllerAPIHandler.swift; sourceTree = "<group>"; };
 		FE3F0D451FBFA40E00EECF41 /* GifExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifExtension.swift; sourceTree = "<group>"; };
 		FE459DFB1FC19DED002425C2 /* UserProfileFriendsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFriendsListTableViewCell.swift; sourceTree = "<group>"; };
+		FE4AC47A204A83A900470353 /* ConfigurationDataModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDataModal.swift; sourceTree = "<group>"; };
 		FE51ED741FDDBBA2002A72CE /* InteractivePopRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractivePopRecognizer.swift; sourceTree = "<group>"; };
 		FE56C6F31F84CEB8002F223A /* Teazer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Teazer-Bridging-Header.h"; sourceTree = "<group>"; };
 		FE5719701FCC6B2600ECC61F /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
@@ -1281,6 +1284,7 @@
 				FEFC446E1F9FD29A0033E71F /* CommonAPIHandler.swift */,
 				FED031751FBD5A3000183AD8 /* ReportTypeDataModal.swift */,
 				FE6492462041FD9500F66CBC /* CoverImageDataModal.swift */,
+				FE4AC47A204A83A900470353 /* ConfigurationDataModal.swift */,
 			);
 			name = "Common APIs";
 			sourceTree = "<group>";
@@ -1570,7 +1574,9 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1608,7 +1614,9 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1834,6 +1842,7 @@
 				FE061DD81FEB993500D2D32D /* CameraControllerAPIHandler.swift in Sources */,
 				FE061DD91FEB993500D2D32D /* HomeDetailPageCollectionViewCell.swift in Sources */,
 				FE061DDA1FEB993500D2D32D /* CommonAPIHandler.swift in Sources */,
+				FE4AC47C204A83A900470353 /* ConfigurationDataModal.swift in Sources */,
 				FE061DDB1FEB993500D2D32D /* FollowingListViewController.swift in Sources */,
 				EF05F632204408EB00704337 /* UploadProgressView.swift in Sources */,
 				FE061DDC1FEB993500D2D32D /* HomePageDetailViewController.swift in Sources */,
@@ -1985,6 +1994,7 @@
 				FE3C99601F73C6B100618ECE /* CameraControllerAPIHandler.swift in Sources */,
 				FEA608391FA9B63800A33ED9 /* HomeDetailPageCollectionViewCell.swift in Sources */,
 				FEFC446F1F9FD29A0033E71F /* CommonAPIHandler.swift in Sources */,
+				FE4AC47B204A83A900470353 /* ConfigurationDataModal.swift in Sources */,
 				FEE7E9F11FB6DFAF00B68C1E /* FollowingListViewController.swift in Sources */,
 				EF05F631204408EB00704337 /* UploadProgressView.swift in Sources */,
 				FE9B85BB1FA5952B0002D2EA /* HomePageDetailViewController.swift in Sources */,

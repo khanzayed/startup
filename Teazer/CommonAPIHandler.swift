@@ -64,5 +64,19 @@ class CommonAPIHandler:AppAPIHandler {
             completionBlock(dataModal)
         }
     }
+    
+    func getConfiguration(_ completionBlock:@escaping (ConfigurationDataModal) -> Void) {
+        let params:[String:Any] = [
+            "platform": 2,
+            "version": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        ]
+        
+        let url = baseURL +  "/v1/application/config"
+        getCURLRequest(url: url, params: params, method: .post)
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            let dataModal = ConfigurationDataModal(jsonResponse: response)
+            completionBlock(dataModal)
+        }
+    }
 
 }

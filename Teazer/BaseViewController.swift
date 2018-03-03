@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class BaseViewController: UIViewController {
 
@@ -18,7 +19,14 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        (User().getAuthToken() != nil) ? launchHomePage() : launchBaseLoginPage()
+        CommonAPIHandler().getConfiguration { [weak self] (responseData) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.getNotificationsData()
+            (User().getAuthToken() != nil) ? strongSelf.launchHomePage() : strongSelf.launchBaseLoginPage()
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,3 +48,25 @@ class BaseViewController: UIViewController {
     }
     
 }
+ 
+ extension BaseViewController {
+    
+    func getNotificationsData() {
+        if KeychainWrapper.standard.string(forKey: Constants.kAuthTokenKey) != nil {
+            NotificationsAPIHandler().getFollowingNotificationsList(1) { (responseData) in
+                if let list = responseData.notifications {
+                    NotificationsCacheData.shared.updateUnreadFollowingCount(count: responseData.unreadCount)
+                    NotificationsCacheData.shared.updateFollowingNotifications(list: list, isReset: true, hasNext: responseData.hasNext!)
+                }
+            }
+            
+            NotificationsAPIHandler().getRequestNotificationsList(1) { (responseData) in
+                if let list = responseData.notifications {
+                    NotificationsCacheData.shared.updateUnreadRequestsCount(count: responseData.unreadCount)
+                    NotificationsCacheData.shared.updateRequestsNotifications(list: list, isReset: true, hasNext: responseData.hasNext!)
+                }
+            }
+        }
+    }
+    
+ }

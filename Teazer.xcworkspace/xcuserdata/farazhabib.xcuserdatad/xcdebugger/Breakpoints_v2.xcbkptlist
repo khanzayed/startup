@@ -33,6 +33,38 @@
             endingLineNumber = "292"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Teazer_Dev.DiscoverNewViewController.tableView(__ObjC.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __ObjC.UITableViewCell"
+                  moduleName = "Teazer-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/farazhabib/Faraz/teazerios/Teazer/DiscoverNewViewController.swift"
+                  timestampString = "541755866.741143"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "293"
+                  endingLineNumber = "293"
+                  offsetFromSymbolStart = "3048">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (Swift.Int, Swift.Bool, Teazer_Dev.FollowInfo) -&gt; () in Teazer_Dev.DiscoverNewViewController.tableView(__ObjC.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __ObjC.UITableViewCell"
+                  moduleName = "Teazer-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/farazhabib/Faraz/teazerios/Teazer/DiscoverNewViewController.swift"
+                  timestampString = "541755866.743589"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "293"
+                  endingLineNumber = "293"
+                  offsetFromSymbolStart = "273">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -65,6 +97,38 @@
             endingLineNumber = "369"
             landmarkName = "followAction(friendId:isAccountPrivate:followInfo:indexPath:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Teazer_Dev.DiscoverNewViewController.followAction(friendId: Swift.Int, isAccountPrivate: Swift.Bool, followInfo: Teazer_Dev.FollowInfo, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "Teazer-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/farazhabib/Faraz/teazerios/Teazer/DiscoverNewViewController.swift"
+                  timestampString = "541755866.752329"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "369"
+                  endingLineNumber = "369"
+                  offsetFromSymbolStart = "861">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Teazer_Dev.AppDataModal) -&gt; () in Teazer_Dev.DiscoverNewViewController.followAction(friendId: Swift.Int, isAccountPrivate: Swift.Bool, followInfo: Teazer_Dev.FollowInfo, indexPath: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "Teazer-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/farazhabib/Faraz/teazerios/Teazer/DiscoverNewViewController.swift"
+                  timestampString = "541755866.754297"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "369"
+                  endingLineNumber = "369"
+                  offsetFromSymbolStart = "3560">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -112,22 +176,6 @@
             startingLineNumber = "126"
             endingLineNumber = "126"
             landmarkName = "updateActionButton(friendId:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Teazer/FriendsListDataModal.swift"
-            timestampString = "541426556.902033"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "init(params:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

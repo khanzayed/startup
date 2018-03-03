@@ -91,8 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         ToastManager.shared.duration = 3.0
         ToastManager.shared.tapToDismissEnabled = true
         ToastManager.shared.queueEnabled = true
-    
-        getNotificationsData()
         
 
         if let value = UserDefaults.standard.value(forKey: "isFirstAppLaunch") as? Bool {
@@ -286,27 +284,5 @@ extension AppDelegate: FIRMessagingDelegate {
 
     }
 
-}
-
-extension AppDelegate {
-    
-    func getNotificationsData() {
-        if KeychainWrapper.standard.string(forKey: Constants.kAuthTokenKey) != nil {
-            NotificationsAPIHandler().getFollowingNotificationsList(1) { (responseData) in
-                if let list = responseData.notifications {
-                    NotificationsCacheData.shared.updateUnreadFollowingCount(count: responseData.unreadCount)
-                    NotificationsCacheData.shared.updateFollowingNotifications(list: list, isReset: true, hasNext: responseData.hasNext!)
-                }
-            }
-            
-            NotificationsAPIHandler().getRequestNotificationsList(1) { (responseData) in
-                if let list = responseData.notifications {
-                    NotificationsCacheData.shared.updateUnreadRequestsCount(count: responseData.unreadCount)
-                    NotificationsCacheData.shared.updateRequestsNotifications(list: list, isReset: true, hasNext: responseData.hasNext!)
-                }
-            }
-        }
-    }
-    
 }
 
