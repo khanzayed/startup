@@ -248,16 +248,5 @@ class UserAPIHandler:AppAPIHandler {
             
         }
     }
-    
-    func checkForUpdate(_ params:[String:Any], completionBlock:@escaping (UsersConfigurationDataModal) -> Void) {
-        let url = baseURL + "/v1/application/config"
-        
-        super.getCURLRequest(url: url, params: params, method: .post)
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: super.headers).responseJSON { (response) in
-            let dataModal = UsersConfigurationDataModal(jsonResponse: response)
-            completionBlock(dataModal)
-        }
-    }
-    
 }
 
