@@ -151,7 +151,6 @@ extension PeopleFollowListViewController {
             guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                 return
             }
-            followCell.requestBtn.isEnabled = true
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                 return
@@ -185,7 +184,6 @@ extension PeopleFollowListViewController {
             followCell.requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
         }
-        followCell.requestBtn.isEnabled = false
     }
     
     func acceptAction(friendId:Int, followInfo:FollowInfo, indexPath:IndexPath) {
@@ -202,7 +200,6 @@ extension PeopleFollowListViewController {
             guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                 return
             }
-            followCell.requestBtn.isEnabled = true
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                 return
@@ -232,7 +229,6 @@ extension PeopleFollowListViewController {
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
         }
-        followCell.requestBtn.isEnabled = false
     }
     
     func unblockAction(friendId:Int, followInfo:FollowInfo, indexPath:IndexPath) {
@@ -260,7 +256,7 @@ extension PeopleFollowListViewController {
                 guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                     return
                 }
-                followCell.requestBtn.isEnabled = true
+
                 if let error = responseData.errorObject {
                     ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                     return
@@ -282,7 +278,6 @@ extension PeopleFollowListViewController {
             followCell.requestBtn.contentEdgeInsets.left = 0
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-            followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.navigationController?.present(alert, animated: false, completion: nil)
@@ -304,7 +299,7 @@ extension PeopleFollowListViewController {
                 guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                     return
                 }
-                followCell.requestBtn.isEnabled = true
+
                 if let error = responseData.errorObject {
                     ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                     return
@@ -326,7 +321,6 @@ extension PeopleFollowListViewController {
             followCell.requestBtn.contentEdgeInsets.left = 0
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-            followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.navigationController?.present(alert, animated: false, completion: nil)
@@ -353,7 +347,7 @@ extension PeopleFollowListViewController {
             guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                 return
             }
-            followCell.requestBtn.isEnabled = true
+
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                 return
@@ -375,7 +369,6 @@ extension PeopleFollowListViewController {
         followCell.requestBtn.contentEdgeInsets.left = 0
         followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
         followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-        followCell.requestBtn.isEnabled = false
     }
     
     func fetchFollowers(pageNo: Int) {

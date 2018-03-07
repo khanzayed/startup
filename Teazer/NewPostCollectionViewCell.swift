@@ -146,14 +146,6 @@ class NewPostTableViewCell: UITableViewCell {
                 post.profileImage = image
             }
         }
-        
-//        if let cachedImage = post.profileImage {
-//            DispatchQueue.main.async {
-//                self.imageProfile.image = cachedImage
-//            }
-//        }  else {
-//            
-//        }
     }
     
     func getVideoImage(urlStr:String?, post:Post) {
@@ -173,25 +165,6 @@ class NewPostTableViewCell: UITableViewCell {
                 }
             }
         }
-
-//        if let cachedImage = post.postImage {
-//            DispatchQueue.main.async {
-//                self.videoImageView.image = cachedImage
-//            }
-//        } else {
-//            DispatchQueue.main.async {
-//                self.videoImageView.image = nil
-//            }
-//            CommonAPIHandler().getDataFromUrl(imageURL: urlStr) { (image) in
-//                DispatchQueue.main.async { [weak self] in
-//                    if image != nil {
-//                        self?.unhideDefaultViews()
-//                        self?.videoImageView.image = image
-//                        post.postImage = image
-//                    }
-//                }
-//            }
-//        }
     }
     
     @IBAction func reactionButtonTapped(_ sender: UIButton) {
@@ -207,10 +180,7 @@ class NewPostTableViewCell: UITableViewCell {
     }
     
     @IBAction func volumeButtonTapped(_ sender: UIButton) {
-        let autoPlay = AppPreferences.getIsAudioAutoPlay()
-        AppPreferences.setIsAudioAutoPlay(autoplay: !autoPlay)
-        
-        if autoPlay {
+        if avPlayer?.volume == 1 {
             let image = UIImage(named: "ic_soundOff")
             btnVolume.setImage(image, for: .normal)
             avPlayer?.volume = 0

@@ -154,7 +154,6 @@ extension FollowingListViewController {
             guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                 return
             }
-            followCell.requestBtn.isEnabled = true
             
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
@@ -183,13 +182,12 @@ extension FollowingListViewController {
             followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
             followCell.requestBtn.contentEdgeInsets.left = 0
         } else {
-            followCell.requestBtn.setTitle(RelationTypes.kFollow.rawValue, for: .normal)
-            followCell.requestBtn.setImage(nil, for: .normal)
-            followCell.requestBtn.contentEdgeInsets.left = 0
-            followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
-            followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
+            followCell.requestBtn.setTitle(RelationTypes.kFollowing.rawValue, for: .normal)
+            followCell.requestBtn.setImage(UIImage(named: "ic_select_tick_icon"), for: .normal)
+            followCell.requestBtn.contentEdgeInsets.left = -11
+            followCell.requestBtn.layer.borderColor = ColorConstants.kTextBlackColor.cgColor
+            followCell.requestBtn.setTitleColor(ColorConstants.kTextBlackColor, for: .normal)
         }
-        followCell.requestBtn.isEnabled = false
     }
     
     func acceptAction(friendId:Int, followInfo:FollowInfo, indexPath:IndexPath) {
@@ -206,7 +204,6 @@ extension FollowingListViewController {
             guard let followCell = self?.tableView.cellForRow(at: indexPath) as? UserProfileFriendsListTableViewCell else {
                 return
             }
-            followCell.requestBtn.isEnabled = true
             
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
@@ -237,7 +234,6 @@ extension FollowingListViewController {
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
         }
-        followCell.requestBtn.isEnabled = false
     }
     
     func unblockAction(friendId:Int, followInfo:FollowInfo, indexPath:IndexPath) {
@@ -266,7 +262,6 @@ extension FollowingListViewController {
                     return
                 }
                 
-                followCell.requestBtn.isEnabled = true
                 if let error = responseData.errorObject {
                     ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                     return
@@ -289,7 +284,6 @@ extension FollowingListViewController {
             followCell.requestBtn.contentEdgeInsets.left = 0
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-            followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.navigationController?.present(alert, animated: false, completion: nil)
@@ -312,7 +306,6 @@ extension FollowingListViewController {
                     return
                 }
                 
-                followCell.requestBtn.isEnabled = true
                 if let error = responseData.errorObject {
                     ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                     return
@@ -335,7 +328,6 @@ extension FollowingListViewController {
             followCell.requestBtn.contentEdgeInsets.left = 0
             followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
             followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-            followCell.requestBtn.isEnabled = false
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.navigationController?.present(alert, animated: false, completion: nil)
@@ -361,7 +353,6 @@ extension FollowingListViewController {
                 return
             }
             
-            followCell.requestBtn.isEnabled = true
             if let error = responseData.errorObject {
                 ErrorView().showBasicAlertForError(message: error.message!, forVC: strongSelf)
                 return
@@ -384,7 +375,6 @@ extension FollowingListViewController {
         followCell.requestBtn.contentEdgeInsets.left = 0
         followCell.requestBtn.layer.borderColor = ColorConstants.kAppGreenColor.cgColor
         followCell.requestBtn.setTitleColor(ColorConstants.kAppGreenColor, for: .normal)
-        followCell.requestBtn.isEnabled = true
     }
 
     

@@ -21,6 +21,9 @@ class TabbarViewController: UITabBarController {
     typealias ScrollToTopBlockForNotification = () -> Void
     var scrollToTopBlockForNotification:ScrollToTopBlockForNotification?
     
+    typealias ScrollToTopBlockForProfile = () -> Void
+    var scrollToTopBlockForProfile:ScrollToTopBlockForProfile?
+    
     var previousSelectedIndex = TabbarControllerIndex.kHomeVCIndex
     var cameraBtn:UIButton!
     let buttonWidth:CGFloat = 55.0
@@ -153,6 +156,10 @@ extension TabbarViewController: UITabBarControllerDelegate {
             scrollToTopBlockForNotification?()
         }
         
+        if TabbarControllerIndex.kMyActivitiesVCIndex == TabbarControllerIndex(rawValue: itemIndex) && previousSelectedIndex == TabbarControllerIndex.kMyActivitiesVCIndex {
+            scrollToTopBlockForProfile?()
+        }
+        
         previousSelectedIndex = TabbarControllerIndex(rawValue: itemIndex)!
 
         
@@ -251,17 +258,19 @@ extension TabbarViewController {
                     homeViewController.hideUploadProgressView()
                     
                     try? FileManager.default.removeItem(at: fileURL)
-                    if let reaction = responseModal.reaction, let index = homeViewController.lastSelectedIndexPathForReaction {
-                        var reactionList = [Reaction]()
-                        if let list = homeViewController.postsList[index.section].reactions {
-                            reactionList = list
-                        }
-                        reactionList.insert(reaction, at: 0)
-                        homeViewController.postsList[index.section].reactions = reactionList
-                        homeViewController.postsList[index.section].canReact = false
-                        homeViewController.postsList[index.section].totalReactions! += 1
-                        DispatchQueue.main.async {
-                            homeViewController.postsTableView.reloadSections([index.section], with: .automatic)
+                    if let reaction = responseModal.reaction {
+                        if let index = homeViewController.lastSelectedIndexPathForReaction {
+                            var reactionList = [Reaction]()
+                            if let list = homeViewController.postsList[index.section].reactions {
+                                reactionList = list
+                            }
+                            reactionList.insert(reaction, at: 0)
+                            homeViewController.postsList[index.section].reactions = reactionList
+                            homeViewController.postsList[index.section].canReact = false
+                            homeViewController.postsList[index.section].totalReactions! += 1
+                            DispatchQueue.main.async {
+                                homeViewController.postsTableView.reloadSections([index.section], with: .automatic)
+                            }
                         }
                     } else {
                         ErrorView().showBasicAlertForError(message: "Reaction upload failed", forVC: homeViewController)

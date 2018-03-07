@@ -15,9 +15,7 @@ import AlamofireImage
 class CameraViewController: UIViewController {
 
     //MARK: - Outlets
-
     @IBOutlet weak var mPreviewView: UIView!
-
     @IBOutlet weak var mCancelBtn: UIButton!
     @IBOutlet weak var mFlashBtn: UIButton!
     @IBOutlet weak var mCameraBtn: UIButton!
@@ -29,7 +27,6 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var timerLbl: UILabel!
     @IBOutlet weak var tapToRecordLbl: UILabel!
     @IBOutlet weak var mCameraCoverBtn: UIButton!
-    
     
     //MARK: - Properties
     var captureSession: AVCaptureSession?
@@ -153,6 +150,10 @@ class CameraViewController: UIViewController {
     }
     
     func setupTimer() {
+        if videoTimer != nil && videoTimer.isValid {
+            return
+        }
+        
         counter = 0
         videoTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerStarted), userInfo: nil, repeats: true)
     }
@@ -329,6 +330,7 @@ class CameraViewController: UIViewController {
         setupTimer()
         videoTimer.fire()
         timerLbl.isHidden = false
+        tapToRecordLbl.text = "Recording"
     }
     
     func recordingStopped() {
@@ -416,8 +418,6 @@ class CameraViewController: UIViewController {
             let interval = CMTime(value: 0, timescale: 1)
             let cGImage:CGImage = try imgGenerator.copyCGImage(at: interval, actualTime: nil)
             let tempVideoImage = UIImage(cgImage: cGImage)
-//            let tempVideoImage = UIImage(cgImage: cGImage, scale: 1, orientation: UIImageOrientation.right)
-            
             videoImage = tempVideoImage.af_imageAspectScaled(toFill: CGSize(width: UIScreen.main.bounds.width, height: 200))
         } catch _ {
             debugPrint("Error creating thumbnail from the video")
@@ -428,6 +428,15 @@ class CameraViewController: UIViewController {
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         guard let dataOutput = movieOutput else {
             print("Capture session is null")
+            
+            if let tabbarVC = self.navigationController?.tabBarController as? TabbarViewController {
+                if tabbarVC.previousSelectedIndex != TabbarControllerIndex.kCameraVCIndex {
+                    tabbarVC.selectedIndex = tabbarVC.previousSelectedIndex.rawValue
+                } else {
+                    tabbarVC.selectedIndex = TabbarControllerIndex.kHomeVCIndex.rawValue
+                }
+            }
+            
             return
         }
         
@@ -458,22 +467,29 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func cameraButtonTapped(_ sender: UIButton) {
-        tapToRecordLbl.text = "Recording"
+        let microPhoneStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio)
+        if !(AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  .authorized &&  microPhoneStatus == .authorized) {
+            ErrorView().showBasicAlertForErrorWithCompletionBlock(title: "Denied", actionTitle: "Settings", message: "Grant permission to Teazer app from Settings to access Camera and Microphone .", forVC: self, completionBlock: { (action) in
+                UIApplication.shared.open(URL(string:"App-Prefs:root=Teazer")!, options: [:], completionHandler: nil)
+            })
+            return
+        }
+        
         guard let dataOutput = movieOutput else {
             print("Capture session is null")
             return
         }
-    
+
         if dataOutput.isRecording {
             if counter < 6 {
                 self.view.makeToast("Video cannot be of less than 5 secs duration")
                 return
             }
+            mCameraBtn.isSelected = false
             recordingStopped()
             dataOutput.stopRecording()
-        } else {
-            recordingStarted()
-            
+        } else if counter == 0 {
+            mCameraBtn.isSelected = true
             let fileUrl = URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + "teazer" + ".mov")
             try? FileManager.default.removeItem(at: fileUrl)
             dataOutput.startRecording(to: fileUrl, recordingDelegate: self)
@@ -520,7 +536,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     }
 
     func fileOutput(_ captureOutput: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        
+        recordingStarted()
     }
 
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {

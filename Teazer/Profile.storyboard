@@ -837,7 +837,7 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eZ-rL-cd1">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eZ-rL-cd1">
                                                     <rect key="frame" x="258" y="15" width="102" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="3HC-e3-x5t"/>
@@ -848,7 +848,7 @@
                                                     <inset key="contentEdgeInsets" minX="-11" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <inset key="imageEdgeInsets" minX="20" minY="6" maxX="75" maxY="6"/>
                                                     <state key="normal" title="Following" image="ic_select_tick_icon">
-                                                        <color key="titleColor" red="0.14901960784313725" green="0.77647058823529413" blue="0.85490196078431369" alpha="1" colorSpace="deviceRGB"/>
+                                                        <color key="titleColor" red="0.14901960780000001" green="0.77647058820000003" blue="0.85490196080000003" alpha="1" colorSpace="deviceRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="requestButtonTapped:" destination="6Pn-hh-j9W" eventType="touchUpInside" id="NRx-yk-vLJ"/>
@@ -1448,7 +1448,7 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvh-HM-gpm">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvh-HM-gpm">
                                                     <rect key="frame" x="258" y="18" width="102" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="102" id="W2p-CU-1Ds"/>

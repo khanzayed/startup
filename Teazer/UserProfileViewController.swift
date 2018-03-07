@@ -107,7 +107,6 @@ class UserProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-
         let tabbarVC = self.navigationController?.tabBarController as! TabbarViewController
         tabbarVC.tabBar.isHidden = isFromVideo
         tabbarVC.hideCameraButton(value: isFromVideo)

@@ -659,10 +659,19 @@ class VideoUploadViewController: UIViewController {
                 return
             }
             
+            if postDetails?.postId == nil && isRecordingReaction {
+                ErrorView().showBasicAlertForError(message: "Error trying to upload a video", forVC: self)
+                return
+            }
+            
             if let tabbarVC = self.navigationController?.tabBarController as? TabbarViewController {
                 tabbarVC.isVideoReadyToUpload = true
                 tabbarVC.videoTitle = titleText
                 tabbarVC.compressedVideoURL = compressedVideoURL
+                tabbarVC.isReactionVideo = isRecordingReaction
+                if let postId = postDetails?.postId {
+                    tabbarVC.reactionPostId = postId
+                }
                 if let image = videoImageView.image {
                     tabbarVC.uploadViewImage = image.af_imageAspectScaled(toFill: CGSize(width: 60.0, height: 60.0))
                 }

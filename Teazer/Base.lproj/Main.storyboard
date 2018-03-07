@@ -1219,8 +1219,11 @@ Delhi fort</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyU-TM-Wzv">
                                 <rect key="frame" x="0.0" y="485" width="375" height="244"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No posts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVV-Uk-rPZ">
-                                        <rect key="frame" x="20" y="115.33333333333337" width="335" height="15"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No posts" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVV-Uk-rPZ">
+                                        <rect key="frame" x="15" y="15" width="345" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="XPy-gs-hqO"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
                                         <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.77647058823529413" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1228,10 +1231,9 @@ Delhi fort</string>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="LVV-Uk-rPZ" secondAttribute="trailing" constant="20" id="5iJ-xH-srW"/>
-                                    <constraint firstItem="LVV-Uk-rPZ" firstAttribute="centerY" secondItem="cyU-TM-Wzv" secondAttribute="centerY" id="QDr-ri-Kqb"/>
-                                    <constraint firstItem="LVV-Uk-rPZ" firstAttribute="centerX" secondItem="cyU-TM-Wzv" secondAttribute="centerX" id="qZV-ec-Ec1"/>
-                                    <constraint firstItem="LVV-Uk-rPZ" firstAttribute="leading" secondItem="cyU-TM-Wzv" secondAttribute="leading" constant="20" id="rQU-SN-I2Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="LVV-Uk-rPZ" secondAttribute="trailing" constant="15" id="8Vh-U9-O3W"/>
+                                    <constraint firstItem="LVV-Uk-rPZ" firstAttribute="top" secondItem="cyU-TM-Wzv" secondAttribute="top" constant="15" id="aFi-wO-j4U"/>
+                                    <constraint firstItem="LVV-Uk-rPZ" firstAttribute="leading" secondItem="cyU-TM-Wzv" secondAttribute="leading" constant="15" id="gk2-eg-FF3"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZu-XT-4FR">

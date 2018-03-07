@@ -131,8 +131,16 @@ class NewProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let tabbarVC = self.navigationController?.tabBarController as! TabbarViewController
+        tabbarVC.scrollToTopBlockForProfile = { [weak self] in
+            DispatchQueue.main.async {
+                let area = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
+                self?.collectionViewReactions.scrollRectToVisible(area, animated: true)
+                self?.collectionView.scrollRectToVisible(area, animated: true)
+            }
+        }
+        
         if isMyProfile {
-            let tabbarVC = self.navigationController?.tabBarController as! TabbarViewController
             tabbarVC.tabBar.isHidden = isFromVideo
             tabbarVC.hideCameraButton(value: isFromVideo)
 
@@ -145,6 +153,7 @@ class NewProfileViewController: UIViewController {
             fetchMyReactions(pageNo: 1)
         } else if let userId = friendUserId {
             followInfo = UserProfileCache.shared.fetchFriendRelation(friendId: userId)?.followInfo
+            lblUserBio.text = ""
             fetchOthersProfile(userId: userId)
             if isAccountPrivate && followInfo?.isFollowing == false {
                 showViewForPrivateAccount()
@@ -313,6 +322,11 @@ class NewProfileViewController: UIViewController {
         
         collectionView.isHidden = false
         collectionViewReactions.isHidden = true
+        
+        hideErrorView()
+        if creationsList.count == 0 {
+            showErrorForCreations()
+        }
     }
     
     @IBAction func myReactionsButtonTapped(_ sender: UIButton) {
@@ -335,6 +349,11 @@ class NewProfileViewController: UIViewController {
         
         collectionViewReactions.isHidden = false
         collectionView.isHidden = true
+        
+        hideErrorView()
+        if reactionsList.count == 0 {
+            showErrorForReactions()
+        }
     }
 
     @IBAction func followButtonTapped(_ sender: UIButton) {
@@ -747,7 +766,9 @@ extension NewProfileViewController {
                     }
                 }
             } else {
-                strongSelf.showErrorForCreations()
+                if strongSelf.selectedVideosSection == .kMyCreations {
+                    strongSelf.showErrorForCreations()
+                }
             }
         }
     }
@@ -791,8 +812,10 @@ extension NewProfileViewController {
                         }
                     }
                 } else {
-                    strongSelf.showErrorForReactions()
+                if strongSelf.selectedVideosSection == .kMyReactions {
+                     strongSelf.showErrorForReactions()
                 }
+            }
         }
     }
 
@@ -817,6 +840,12 @@ extension NewProfileViewController {
                     DispatchQueue.main.async {
                         strongSelf.creationsList.remove(at: indexPath.row)
                         strongSelf.collectionView.deleteItems(at: [indexPath])
+                        if strongSelf.creationsList.count > 0 && indexPath.row < strongSelf.creationsList.count {
+                            strongSelf.collectionView.reloadItems(at: [indexPath] )
+                        }
+                        if strongSelf.creationsList.count == 0 {
+                            strongSelf.showErrorForCreations()
+                        }
                     }
                 }
             }
@@ -843,6 +872,12 @@ extension NewProfileViewController {
                     DispatchQueue.main.async {
                         strongSelf.reactionsList.remove(at: indexPath.row)
                         strongSelf.collectionViewReactions.deleteItems(at: [indexPath])
+                        if strongSelf.reactionsList.count > 0 && indexPath.row < strongSelf.reactionsList.count {
+                            strongSelf.collectionViewReactions.reloadItems(at: [indexPath] )
+                        }
+                        if strongSelf.reactionsList.count == 0 {
+                            strongSelf.showErrorForReactions()
+                        }
                     }
                 }
             }
@@ -904,7 +939,9 @@ extension NewProfileViewController {
                     }
                 }
             } else {
-                strongSelf.showErrorForCreations()
+                if strongSelf.selectedVideosSection == .kMyCreations {
+                    strongSelf.showErrorForCreations()
+                }
             }
         }
     }
@@ -1131,9 +1168,6 @@ extension NewProfileViewController: UICollectionViewDataSource, UICollectionView
                         CommonAPIHandler().getDataFromUrlWithId(imageURL: urlStr, imageId: reactionOwnerId, indexPath: indexPath, completion: { (image, lastIndexPath, key) in
                             DispatchQueue.main.async {
                                 let resizedImage = image?.af_imageAspectScaled(toFill: CGSize(width: 60, height: 60))
-//                                if let cell = self?.collectionView.cellForItem(at: lastIndexPath) as? FeaturesVideosCollectionViewCell {
-//                                    cell.profileImageView.image = resizedImage
-//                                }
                                 cell.profileImageView.image = resizedImage
                                 AppImageCache.saveOthersProfileImage(image: resizedImage, userId: key)
                             }
