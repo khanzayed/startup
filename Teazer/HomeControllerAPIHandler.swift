@@ -110,7 +110,7 @@ class HomeControllerAPIHandler: AppAPIHandler {
     }
     
     func getLikersList(_ postId:Int, pageNo:Int, completionBlock:@escaping (PeopleDataModel) -> Void) {
-        let url = baseURL + "/v2/post/liked/users/\(postId)/\(pageNo)"
+        let url = baseURL + "/v1/post/liked/users/\(postId)/\(pageNo)"
         
         getCURLRequest(url: url, params: nil, method: .get)
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in

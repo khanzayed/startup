@@ -1461,13 +1461,6 @@ extension NewProfileViewController: UIScrollViewDelegate {
         let y = heightHeaderView - (scrollView.contentOffset.y + heightHeaderView)
         let height = min(max(y, 110), 550)
         constraintProfileViewHeight.constant = height
-//        if collectionView != nil, collectionViewReactions != nil {
-//            if collectionView.tag == 101 {
-//                collectionViewReactions.setContentOffset(CGPoint(x: 0,y: height), animated: true)
-//            } else {
-//                collectionView.setContentOffset(CGPoint(x: 0,y: height), animated: true)
-//            }
-//        }
         
         let diff = (heightHeaderView - y) / heightHeaderView
         viewToolBar.alpha = min(max(diff, 0), 0.7)
